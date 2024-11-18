@@ -1,0 +1,2270 @@
+@font-face {
+  font-family: Saira;
+  src: url(./SairaStencilOne-Regular.ttf);
+}
+
+:root {
+  --bg-dark: hsl(191, 44%, 7%);
+  --holo-bg: hsl(0, 0%, 29%);
+  --grid-color: hsla(24, 100%, 50%, 0.2);
+  --grid-thick-color: hsla(24, 100%, 50%, 0.15);
+  --tile-size-raw: 40;
+  --tile-size: calc(var(--tile-size-raw) * 1px);
+  --modal-bg-dark: hsl(180, 73%, 7%);
+  --modal-bg-gradient: linear-gradient(
+    to bottom,
+    hsl(180, 77%, 10%),
+    var(--modal-bg-dark)
+  );
+  --sidebar-width: calc(var(--tile-size) * 2 + 4.5rem);
+  --grid-selector-outline: hsla(0, 0%, 100%, 0.32);
+  --grid-selector-bg: hsla(0, 0%, 100%, 0.16);
+  --cyan: hsl(180, 100%, 48%);
+  --cyan-12: hsla(172, 100%, 49%, 0.12);
+  --swap-target-outline: hsl(59, 100%, 48%);
+  --swap-target-bg: hsla(59, 100%, 48%, 0.22);
+  --block-bg: hsl(240, 1%, 61%);
+  --block-outline: hsl(240, 2%, 70%);
+  --trap-red: hsl(0, 100%, 50%);
+  --delete-red: hsl(17, 100%, 50%);
+  --delete-red-40: hsla(14, 100%, 50%, 0.4);
+  --holo-green: hsl(88, 100%, 39%);
+  --holo-green-40: hsla(88, 100%, 27%, 0.4);
+  --corrosive-orange: hsl(44, 100%, 50%);
+  --corrosive-bg: hsl(56, 100%, 71%);
+  --corrosive-bg-dark: hsl(0, 100%, 32%);
+  --mym-yellow: hsl(56, 68%, 49%);
+  --mym-yellow-muted: hsl(56, 68%, 27%);
+  --mym-yellow-text: hsl(66, 40%, 60%);
+  --mym-yellow-text-muted: hsl(66, 40%, 35%);
+  --mym-orange: hsl(19, 82%, 43%);
+  --mym-btn-bg: hsl(143, 25%, 9%);
+  --brown: hsl(36, 100%, 23%);
+  --plasma-grey: hsl(205, 8%, 30%);
+  --plasma-grey-dark: hsl(202, 10%, 23%);
+  --plasma-orange: hsl(36, 100%, 50%);
+  --cage-pattern: transparent 0 4px, var(--plasma-grey-dark) 4px 5px;
+  --red-dot-small: white 0.5px, red 1px, transparent 2px;
+  --red-dot-big: white 1px, red 2px, transparent 3px;
+  --skin: hsl(27, 56%, 71%);
+  --skin-light: hsl(from var(--skin) h s calc(l + 5));
+  --teeth: hsl(49, 100%, 93%);
+  --grey: hsl(30, 3%, 56%);
+  --grey-dark: hsl(30, 3%, 16%);
+  --black-33: hsla(0, 0%, 0%, 0.33);
+  --black-60: hsla(0, 0%, 0%, 0.6);
+  --metal: hsl(0, 0%, 33%);
+
+  --skin-95-gradient: var(--skin) 95%, transparent 100%;
+  --grey-90-gradient: var(--grey) 90%, transparent 100%;
+  --metal-90-gradient: var(--metal) 90%, transparent 100%;
+  --metal-95-gradient: var(--metal) 95%, transparent 100%;
+  --shaded-grey-to-metal-gradient: var(--grey), var(--metal-95-gradient);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+body {
+  align-content: center;
+  min-height: 100cqh;
+  background: var(--bg-dark);
+  font:
+    1rem 'Saira',
+    sans-serif;
+  color: white;
+}
+
+#welcome {
+  opacity: 1;
+  scale: 1;
+  --welcome-step-1: 600ms;
+  transition: all cubic-bezier(0.5, 2, 0.15, 0.8)
+    calc(var(--welcome-step-1) * 0.7);
+  white-space: nowrap;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0 2cqw;
+  justify-content: center;
+  align-items: center;
+  container: log / size;
+  height: 24cqw;
+  overflow: visible;
+  user-select: none;
+  pointer-events: none;
+}
+#welcome img {
+  translate: 0 0;
+  scale: 1;
+  transform-origin: center;
+  transition:
+    translate 750ms var(--welcome-step-1),
+    scale 750ms var(--welcome-step-1);
+  filter: drop-shadow(0 0.5rem 0.25rem var(--black-60));
+  width: 20cqw;
+  z-index: 1;
+}
+#welcome h1 {
+  transform-origin: center;
+  translate: 0 0;
+  scale: 1 1;
+  opacity: 1;
+  transition:
+    scale 750ms var(--welcome-step-1),
+    translate 750ms var(--welcome-step-1),
+    opacity 750ms var(--welcome-step-1);
+  line-height: 1;
+  font-size: 6cqw;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin: 0;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(
+    to bottom,
+    var(--plasma-orange) -40%,
+    var(--delete-red)
+  );
+  filter: drop-shadow(0 3px 0.1rem black);
+  background-clip: text;
+}
+#welcome p {
+  grid-column: 2 / 3;
+  font-size: 2.8cqw;
+  font-family: system-ui;
+  font-weight: bold;
+  margin: 0;
+  color: transparent;
+  background: var(--modal-bg-gradient);
+  background-clip: text;
+  filter: brightness(2) drop-shadow(0 3px 0.1rem black);
+  transition: opacity 500ms ease-in calc(var(--welcome-step-1) * 2.3);
+  opacity: 1;
+  scale: 1;
+  text-align: right;
+  translate: 0 -7cqw;
+}
+#start-btn {
+  position: absolute;
+  bottom: -4cqw;
+  left: 50%;
+  translate: -50% 0;
+  font-size: 2cqw;
+  color: var(--teeth);
+  font-family: system-ui;
+  font-weight: bold;
+  letter-spacing: 0.1ch;
+  text-transform: uppercase;
+  border-radius: 3px;
+  opacity: 0;
+  animation: pulse 3.3s infinite calc(var(--welcome-step-1) * 4);
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  30%,
+  70% {
+    opacity: 1;
+  }
+}
+#start-btn::before,
+#start-btn::after {
+  content: 'Press any key';
+  color: var(--cyan);
+  position: absolute;
+  left: 0;
+  clip-path: inset(34% 0 0 0);
+  animation: glitch 1s linear infinite;
+  z-index: -1;
+}
+#start-btn::before {
+  clip-path: inset(12% 0 66% 0);
+  animation-direction: reverse;
+  animation-delay: 800ms;
+  color: hsl(313, 100%, 50%);
+}
+@keyframes glitch {
+  0%,
+  61%,
+  65%,
+  72%,
+  83%,
+  100% {
+    translate: 0 0;
+  }
+  63%,
+  68% {
+    translate: -2% 0;
+  }
+  80%,
+  87%,
+  97% {
+    translate: 1% 0;
+  }
+}
+
+@starting-style {
+  #welcome,
+  #welcome p,
+  #start-btn {
+    opacity: 0;
+    scale: 0;
+  }
+  #welcome img {
+    scale: 1.5;
+    translate: 140% 0;
+  }
+  #welcome h1 {
+    translate: -50% 0;
+    scale: 0 1;
+    opacity: 0;
+  }
+}
+
+#keymap {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  translate: 0 -50%;
+  font-size: 1rem;
+  text-align: left;
+  padding: 1.2rem 1rem;
+  color: var(--mym-yellow);
+  background: var(--black-60);
+  z-index: 99;
+  user-select: none;
+  pointer-events: none;
+  --corner-cut: 0.5rem;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--corner-cut)) 0,
+    100% var(--corner-cut),
+    100% calc(100% - var(--corner-cut)),
+    calc(100% - var(--corner-cut)) 100%,
+    0 100%
+  );
+}
+#keymap-hint,
+#press-hint {
+  font-size: 1.25rem;
+  margin-block-end: 0.75rem;
+  text-transform: uppercase;
+}
+
+#press-hint {
+  border-top: 2px solid var(--mym-yellow-muted);
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+}
+.keys {
+  display: grid;
+  grid-template-columns: min-content auto;
+  gap: 0.75rem 0.5rem;
+  justify-items: start;
+  align-items: baseline;
+}
+.keys span {
+  font-weight: bold;
+  font-family: monospace;
+}
+kbd,
+.mouse {
+  display: inline-block;
+  position: relative;
+  line-height: 1.4rem !important;
+  min-width: 2ch;
+  text-align: center;
+  font: inherit !important;
+  color: var(--bg-dark);
+  background: var(--mym-yellow);
+  --corner-cut: 0.3rem;
+  clip-path: polygon(
+    var(--corner-cut) 0,
+    calc(100% - var(--corner-cut)) 0,
+    100% var(--corner-cut),
+    100% calc(100% - var(--corner-cut)),
+    calc(100% - var(--corner-cut)) 100%,
+    var(--corner-cut) 100%,
+    0 calc(100% - var(--corner-cut)),
+    0 var(--corner-cut)
+  );
+}
+kbd.half-cornered {
+  padding: 0 0.5rem;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--corner-cut)) 0,
+    100% var(--corner-cut),
+    100% 100%,
+    var(--corner-cut) 100%,
+    0 calc(100% - var(--corner-cut)),
+    0 0
+  );
+}
+.mouse {
+  min-width: unset;
+  width: 1.4rem;
+  box-shadow: inset 1px 1px 0 var(--mym-yellow);
+}
+.lmb {
+  background: linear-gradient(135deg, var(--mym-yellow) 13%, transparent 13%),
+    linear-gradient(to bottom, transparent 70%, var(--mym-yellow) 70%),
+    linear-gradient(to right, black 50%, var(--mym-yellow) 50%);
+}
+.mouse::before {
+  content: '';
+  position: absolute;
+  top: 16%;
+  left: 35%;
+  height: 38%;
+  width: 30%;
+  background: black;
+  border: 1px solid var(--mym-yellow);
+  background-clip: padding-box;
+}
+.hint {
+  display: contents;
+}
+.red-hint kbd {
+  background: var(--delete-red);
+}
+.red-hint span {
+  color: var(--delete-red);
+}
+.brown-hint kbd {
+  background: var(--brown);
+}
+.brown-hint span {
+  color: var(--brown);
+}
+dialog {
+  overflow: visible;
+  padding: 0;
+  border: none;
+  font-family: monospace;
+  font-weight: bold;
+  text-align: left;
+  color: var(--mym-yellow);
+  background: var(--modal-bg-gradient);
+  border-left: 2px solid var(--mym-yellow);
+  outline: none;
+  box-shadow: 0 0 1rem black;
+  transform-origin: top left;
+  transition: scale 250ms cubic-bezier(0.5, 0, 0.5, 1);
+}
+dialog[open] {
+  scale: 1 1;
+}
+@starting-style {
+  dialog[open] {
+    scale: 0 0.5;
+  }
+}
+dialog::backdrop {
+  background: var(--black-60);
+  backdrop-filter: blur(5px);
+}
+dialog::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  right: calc(100% - 12px);
+  height: 1px;
+  width: 12px;
+  border-top: 4px solid var(--mym-yellow);
+  transform-origin: center right;
+  animation: move 400ms ease-out forwards 300ms;
+}
+@keyframes move {
+  100% {
+    right: 0;
+  }
+}
+dialog * {
+  scrollbar-color: var(--mym-yellow) transparent;
+  scrollbar-width: thin;
+}
+dialog h3 {
+  display: inline-block;
+  margin: 0;
+  margin-block-start: 0.8rem;
+  padding: 0.6rem 1.4rem;
+  font-size: 1.4rem;
+  color: black;
+  background: var(--mym-yellow);
+}
+dialog form {
+  padding: 1.5rem;
+  user-select: none;
+}
+[hidden] {
+  display: none !important;
+}
+#help[open] {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: start;
+  min-width: min(102ch, calc(100% - 2em - 6px));
+  height: min(101ch, calc(100% - 2em - 6px));
+  max-height: min(94vh, 125ch);
+}
+#help form {
+  margin-top: auto;
+}
+#help nav {
+  padding-right: 0.5rem;
+  margin-right: 1rem;
+  overflow: auto;
+}
+nav button {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.5;
+  text-align: left;
+  background: var(--black-33);
+  user-select: none;
+}
+nav button:hover {
+  background: var(--black-60);
+}
+nav button.active {
+  color: black;
+  background: var(--mym-yellow);
+}
+#help-body {
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  padding: 1.5rem;
+}
+.help-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 54ch;
+  max-width: 70ch;
+}
+.help-page > h4,
+.dialog-scrollable {
+  scale: 1;
+  opacity: 1;
+  transform-origin: top left;
+  transition:
+    scale 200ms,
+    opacity 250ms;
+}
+.dialog-scrollable {
+  transition-delay: 50ms;
+  scroll-padding-top: 2.5rem;
+}
+@starting-style {
+  .help-page > h4 {
+    scale: 0 1;
+    opacity: 0;
+  }
+  .dialog-scrollable {
+    scale: 1 0;
+    opacity: 0;
+  }
+}
+.help-page h4 {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  color: black;
+  background: var(--mym-yellow);
+  --clip-offset: 1rem;
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--clip-offset)) 0,
+    100% var(--clip-offset),
+    100% 100%,
+    0 100%
+  );
+}
+.help-page h5 {
+  font-size: 1.1rem;
+  color: var(--mym-yellow-text);
+  margin: 3.5rem 0 0;
+}
+.dialog-scrollable {
+  max-width: 70ch;
+  overflow: auto;
+  padding: 0 1rem 1rem;
+  line-height: 1.5;
+  color: var(--mym-yellow-text-muted);
+}
+.dialog-scrollable > *:first-child {
+  margin-top: 2.5rem;
+}
+.dialog-scrollable:has(h5) p {
+  margin-left: 2rem;
+}
+.info,
+.hotkeys {
+  padding: 1rem 1rem 1rem 4rem;
+  position: relative;
+  border-left: 2px solid var(--mym-yellow-text-muted);
+  background: var(--black-33);
+  border-radius: 3px;
+  color: var(--mym-yellow-muted);
+  overflow: hidden;
+}
+.info::before {
+  content: '🛈';
+  font-size: 1.8rem;
+  font-weight: normal;
+  color: var(--mym-yellow);
+  display: block;
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  color: transparent;
+  background: linear-gradient(
+    20deg,
+    var(--trap-red) 30%,
+    var(--mym-yellow) 50%
+  );
+  background-clip: text;
+}
+.hotkeys::before {
+  content: '⌨';
+  font-size: 3rem;
+  line-height: 1rem;
+  font-weight: normal;
+  display: block;
+  position: absolute;
+  top: calc(1rem + 3px);
+  left: 1rem;
+  color: transparent;
+  background: linear-gradient(
+    20deg,
+    var(--trap-red) 20%,
+    var(--mym-yellow) 40%
+  );
+  background-clip: text;
+  rotate: -20deg;
+}
+.info::after,
+.hotkeys::after {
+  content: '';
+  height: 5px;
+  width: 3px;
+  position: absolute;
+  top: 2.2rem;
+  left: 1.25rem;
+  transform-origin: top center;
+  background: var(--trap-red);
+  border-radius: 99rem;
+  animation: drip 2s ease-in-out infinite;
+}
+.info::after {
+  top: 2.5rem;
+  left: 1.7rem;
+}
+@keyframes drip {
+  0% {
+    scale: 1 0.5;
+  }
+  70% {
+    scale: 1 1;
+    translate: 0 0;
+  }
+  80% {
+    scale: 1 1;
+    translate: 0 1.5rem;
+    transform-origin: bottom center;
+  }
+  80.1% {
+    scale: 1 0.2;
+  }
+  92% {
+    scale: 3 0.2;
+    translate: 0 1.5rem;
+    opacity: 1;
+  }
+  100% {
+    scale: 3 0.2;
+    translate: 0 1.5rem;
+    opacity: 0.1;
+    transform-origin: bottom center;
+  }
+}
+
+.help-page .mouse {
+  max-width: 1.9ch;
+}
+.mouse-scroll::before {
+  display: none;
+}
+.mouse-scroll::after {
+  content: '↕';
+  position: absolute;
+  font-size: 1.8rem;
+  line-height: 0;
+  top: 25%;
+  left: 50%;
+  translate: -50% 0;
+}
+.help-page kbd {
+  margin-right: 0;
+}
+.mouse,
+kbd {
+  user-select: none;
+}
+[title]:not(button) {
+  cursor: help;
+}
+.inline-object {
+  display: inline-block !important;
+  vertical-align: middle;
+  translate: 0 -15%;
+}
+[data-link] {
+  color: var(--mym-yellow);
+  cursor: pointer;
+}
+[data-link]:hover {
+  text-decoration: underline;
+}
+[data-link]::after {
+  content: '⇱';
+  font-weight: normal;
+  font-size: 1.5em;
+  line-height: 0;
+  vertical-align: baseline;
+  margin-left: 0.2rem;
+  display: inline-block;
+  rotate: -90deg;
+  translate: 0 0.1em;
+}
+
+em,
+.text-yellow {
+  color: var(--mym-yellow);
+}
+.edit-traps-list {
+  display: grid;
+  grid-template: auto auto / auto auto;
+  gap: 2rem 2.5rem;
+  justify-content: start;
+  align-items: start;
+  margin: 1.5rem 0;
+}
+.edit-traps-list h6 {
+  color: var(--mym-yellow-text);
+  margin: 0.1rem 0;
+}
+.edit-traps-list ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+#help form {
+  align-self: end;
+  padding-top: 0.5rem;
+}
+#help .buttons {
+  margin: 0;
+}
+.warning {
+  color: black;
+  background: var(--mym-orange);
+}
+input[type='file'] {
+  position: relative;
+  font-family: inherit;
+  font-weight: bold;
+  min-width: 64ch;
+  padding: 1px 0;
+  cursor: pointer;
+  background: linear-gradient(to right, var(--black-33), transparent);
+}
+input[type='file']:hover {
+  background: linear-gradient(to right, var(--mym-yellow-muted), transparent);
+}
+input[type='file']:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+input[type='file']::file-selector-button {
+  font: inherit;
+  color: var(--mym-yellow);
+  border: none;
+  background: radial-gradient(
+      closest-side,
+      var(--mym-yellow-muted) -300%,
+      transparent
+    ),
+    linear-gradient(
+      to bottom,
+      var(--mym-yellow-muted) 1px,
+      transparent 1px 35%,
+      var(--mym-btn-bg) 35% 65%,
+      transparent 65% calc(100% - 1px),
+      var(--mym-yellow-muted) calc(100% - 1px)
+    ),
+    linear-gradient(
+      to right,
+      var(--mym-yellow-muted) 1px,
+      transparent 1px calc(100% - 1px),
+      var(--mym-yellow-muted) calc(100% - 1px)
+    ),
+    var(--mym-btn-bg);
+  padding-block: 0.75rem;
+  padding-inline: 1.5rem;
+  margin-inline-end: 1rem;
+  cursor: pointer;
+  transition: scale 50ms;
+}
+input[type='file']::file-selector-button:hover {
+  color: black;
+  background: var(--mym-yellow);
+}
+input[type='file']::file-selector-button:active {
+  scale: 0.95;
+}
+input[type='text'] {
+  font: inherit;
+  color: var(--mym-yellow);
+  border: 1px solid var(--mym-yellow-muted);
+  background: #0003;
+  padding-block: 0.75rem;
+  padding-inline: 0.5rem;
+  min-width: 36ch;
+}
+input[type='text']:focus {
+  outline: none;
+  border-color: var(--mym-yellow);
+}
+input[type='text']::placeholder {
+  color: var(--mym-yellow-muted);
+}
+
+dialog .buttons {
+  margin-block-start: 2rem;
+  text-align: right;
+}
+button {
+  font: inherit;
+  color: var(--mym-yellow);
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  padding: 0 1px;
+  margin-inline-start: 1rem;
+  cursor: pointer;
+  transition: scale 50ms;
+}
+button:disabled {
+  pointer-events: none;
+}
+button:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+button:hover {
+  background: linear-gradient(to right, var(--mym-yellow) -100%, transparent);
+  border-left-color: var(--mym-yellow);
+}
+button:active {
+  scale: 0.94;
+}
+dialog kbd {
+  font-family: 'Saira' !important;
+  font-weight: normal !important;
+  margin-inline-end: 1ch;
+}
+
+.bar {
+  position: fixed;
+  display: flex;
+  gap: 1rem;
+  top: 1rem;
+  left: 50%;
+  translate: -50% 0;
+  font-family: monospace;
+  font-weight: bold;
+  color: var(--mym-yellow);
+  z-index: 99;
+}
+#bottom-bar {
+  top: unset;
+  bottom: 1rem;
+}
+.bar-grp {
+  display: flex;
+  height: 2rem;
+  align-items: stretch;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.bar button {
+  min-width: 4ch;
+  margin: 0;
+  padding: 0 0.5rem;
+  background: var(--black-60);
+  user-select: none;
+}
+.bar button:hover {
+  background: var(--mym-yellow);
+  color: black;
+}
+.bar button:active {
+  opacity: 0.7;
+}
+.bar button:disabled {
+  cursor: not-allowed;
+  color: var(--plasma-grey-dark);
+  background: var(--black-33);
+}
+.history-btns button[id^='history-'] {
+  font-size: 1.4rem;
+  scale: 1 -1;
+}
+#zoom-val {
+  min-width: 6ch !important;
+}
+#toolbar {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  translate: 0 -50%;
+  width: var(--sidebar-width);
+  background: var(--modal-bg-gradient);
+  box-shadow: 0 0.4rem 0 -0.2rem var(--modal-bg-dark);
+  filter: drop-shadow(0 0.25rem 0.25rem var(--black-33));
+  z-index: 99;
+  user-select: none;
+}
+#toolbar::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border: 0.5rem solid transparent;
+  border-top-color: var(--modal-bg-dark) !important;
+}
+h2 {
+  position: relative;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 1.17em;
+  line-height: 1.3rem;
+  text-shadow: 1px 1px 0.15rem black;
+  width: 110%;
+  left: -5%;
+  padding-top: 0.5rem;
+  background: var(--mym-orange);
+  box-shadow: 0 0.4rem 0 -0.2rem var(--mym-orange);
+  filter: drop-shadow(0 1px 0.15rem var(--black-60));
+}
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border: 0.5rem solid transparent;
+  border-top-color: var(--mym-orange) !important;
+}
+h2:first-of-type {
+  margin-block-start: 0;
+}
+.tool-grp {
+  padding: 0.75rem 1.5rem 0;
+  filter: drop-shadow(1px 1px 0.1rem black);
+}
+.tool-grp-label {
+  position: relative;
+  display: flex;
+  gap: 1.5rem;
+  margin-block-end: 1.5rem;
+}
+.tool-grp-label::before {
+  content: attr(data-tool-grp);
+  position: absolute;
+  top: 50%;
+  left: -1.5rem;
+  translate: -50% -50%;
+  line-height: 1rem;
+  min-width: 1rem;
+  padding: 2px;
+  color: var(--mym-yellow);
+  background: var(--modal-bg-gradient);
+  border-radius: 3px;
+}
+.tool-grp div:not([data-tool-grp]) {
+  cursor: pointer;
+  position: relative;
+}
+
+.tool-grp div:not([data-tool-grp])::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--tile-size) * -0.25);
+  left: calc(var(--tile-size) * -0.25);
+  height: calc(100% + var(--tile-size) * 0.5);
+  width: calc(100% + var(--tile-size) * 0.5);
+  border-radius: 4px;
+  visibility: hidden;
+}
+.tool-grp div:not([data-tool-grp]):hover::before {
+  visibility: visible;
+  background: var(--grid-selector-bg);
+}
+#selected-tool::before {
+  visibility: visible;
+  outline: 2px solid var(--cyan);
+}
+
+.block,
+.trap,
+.guard,
+.genmat {
+  position: relative;
+  aspect-ratio: 1/1;
+  height: var(--tile-size);
+  width: var(--tile-size);
+  background-clip: padding-box !important;
+}
+.block-full {
+  background: url(block.svg), var(--block-bg);
+  border: 2px solid var(--block-outline);
+  background-size: 400%;
+  background-position: 50% 50%;
+}
+.slot:nth-child(4n) .block-full {
+  background-position: 20% 10%;
+}
+.slot:nth-child(4n + 1) .block-full {
+  background-position: 40% 70%;
+}
+.slot:nth-child(4n + 2) .block-full {
+  background-position: 60%;
+}
+.slot:nth-child(4n + 3) .block-full {
+  background-position: 90%;
+}
+.block-half {
+  background: linear-gradient(
+    45deg,
+    var(--block-bg) calc(50% - 2.4px),
+    var(--block-outline) calc(50% - 2.4px),
+    var(--block-outline) 50%,
+    transparent 50.1%
+  );
+  border: 2px solid var(--block-outline);
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.tile:has(.corrosive) {
+  box-shadow: 0 0 2rem var(--corrosive-bg-dark);
+}
+.corrosive {
+  --corrosive-pattern: transparent 2px, var(--bg-dark) 2px 15%,
+    var(--corrosive-bg) 15% 85%, var(--bg-dark) 85% calc(100% - 2px),
+    transparent calc(100% - 2px);
+  background: linear-gradient(to right, var(--corrosive-pattern)),
+    linear-gradient(to bottom, var(--corrosive-pattern));
+  position: relative;
+  z-index: 1;
+}
+.corrosive::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: calc(100% - 4px);
+  width: calc(100% - 4px);
+  background: url(noise.svg),
+    radial-gradient(var(--corrosive-bg), var(--mym-orange) 45%);
+  outline: 1px solid var(--mym-orange);
+  background-size:
+    200% 200%,
+    200% 200%;
+  background-position:
+    47% 47%,
+    50% 50%;
+  animation: corrosive 5s linear infinite;
+}
+@keyframes corrosive {
+  0%,
+  100% {
+    background-position:
+      47% 47%,
+      50% 50%;
+  }
+  50% {
+    background-position:
+      52% 52%,
+      50% 50%;
+  }
+}
+.opaque::after {
+  background: var(--mym-orange);
+  box-shadow:
+    inset 0 0 0.25rem var(--delete-red),
+    inset 0 0 1.75rem var(--delete-red);
+  outline-color: var(--delete-red);
+}
+.holo {
+  --holo-pattern: transparent 2px, var(--bg-dark) 2px, var(--bg-dark) 30%,
+    var(--holo-green) 30%, var(--holo-green) 70%, var(--bg-dark) 70%,
+    var(--bg-dark) calc(100% - 2px), transparent calc(100% - 2px);
+  background: linear-gradient(to right, var(--holo-pattern)),
+    linear-gradient(to bottom, var(--holo-pattern));
+}
+.holo::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: calc(100% - 4px);
+  width: calc(100% - 4px);
+  --holo-green-lines: color(from var(--holo-green) srgb r g b / 0.05);
+  background: repeating-linear-gradient(
+      45deg,
+      var(--holo-green-lines) 0 1px,
+      transparent 1px 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      var(--holo-green-lines) 0 1px,
+      transparent 1px 4px
+    ),
+    var(--bg-dark);
+  outline: 1px dotted var(--holo-green);
+  box-shadow: inset 0 0 1rem var(--holo-green);
+  animation: holo 1s ease-in-out infinite;
+}
+@keyframes holo {
+  70% {
+    box-shadow: inset 0 0 1.15rem var(--holo-green);
+  }
+}
+.plasma {
+  position: relative;
+  background: radial-gradient(
+      closest-side,
+      var(--grey-dark) 0 13%,
+      var(--delete-red) 15.5%,
+      var(--plasma-orange) 17% 18%,
+      var(--delete-red) 19.5%,
+      var(--plasma-grey-dark) 21%,
+      transparent 21% 27%,
+      var(--plasma-orange) 27% 29%,
+      transparent 29% 100%
+    ),
+    radial-gradient(
+      closest-side,
+      var(--plasma-grey-dark) 0 22%,
+      var(--grey-dark) 42.5%,
+      transparent 42.5% 100%
+    );
+  border: 3px solid var(--plasma-grey);
+  border-radius: 3px;
+
+  background-position:
+    50% 50%,
+    50% 50%;
+  background-size:
+    200% 200%,
+    200% 200%;
+
+  animation: plasma-eye 5s ease-out infinite;
+}
+@keyframes plasma-eye {
+  2%,
+  20% {
+    background-position:
+      25% 50%,
+      50% 50%;
+    background-size:
+      160% 200%,
+      200% 200%;
+  }
+  22%,
+  40% {
+    background-position:
+      32% 40%,
+      50% 50%;
+    background-size:
+      170% 190%,
+      200% 200%;
+  }
+  42%,
+  60% {
+    background-position:
+      60% 68%,
+      50% 50%;
+    background-size:
+      170% 180%,
+      200% 200%;
+  }
+  62%,
+  80% {
+    background-position:
+      68% 42%,
+      50% 50%;
+    background-size:
+      162% 180%,
+      200% 200%;
+  }
+  82%,
+  100% {
+    background-position:
+      50% 50%,
+      50% 50%;
+    background-size:
+      200% 200%,
+      200% 200%;
+  }
+}
+.plasma::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: repeating-linear-gradient(to right, var(--cage-pattern)),
+    repeating-linear-gradient(to bottom, var(--cage-pattern));
+}
+.blossom {
+  --blossom-bg: radial-gradient(circle at 1px 1px, var(--red-dot-small)),
+    radial-gradient(circle at 1px 8px, white 0.5px, red 1px, transparent 2px),
+    radial-gradient(circle at 1px calc(100% - 8px), var(--red-dot-small)),
+    radial-gradient(circle at 1px calc(100% - 1px), var(--red-dot-small)),
+    radial-gradient(circle at calc(100% - 1px) 1px, var(--red-dot-small)),
+    radial-gradient(circle at calc(100% - 1px) 8px, var(--red-dot-small)),
+    radial-gradient(
+      circle at calc(100% - 1px) calc(100% - 8px),
+      var(--red-dot-small)
+    ),
+    radial-gradient(
+      circle at calc(100% - 1px) calc(100% - 1px),
+      var(--red-dot-small)
+    ),
+    linear-gradient(
+      to right,
+      var(--plasma-grey) 3px,
+      transparent 3px calc(100% - 3px),
+      var(--plasma-grey) calc(100% - 3px)
+    ),
+    linear-gradient(
+      to bottom,
+      var(--plasma-grey) 3px,
+      transparent 3px calc(100% - 3px),
+      var(--plasma-grey) calc(100% - 3px)
+    ),
+    radial-gradient(transparent -10%, var(--plasma-orange) 100%);
+  background: var(--blossom-bg);
+  animation: blossom-glow 5s ease infinite;
+}
+@keyframes blossom-glow {
+  0%,
+  45%,
+  55%,
+  65%,
+  75%,
+  100% {
+    filter: saturate(1.1) brightness(0.9) hue-rotate(-15deg);
+  }
+  50%,
+  60%,
+  70%,
+  80% {
+    filter: saturate(1) brightness(1.3) hue-rotate(0deg);
+  }
+}
+.blossom::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  height: calc(100% - 6px);
+  width: calc(100% - 6px);
+  background: radial-gradient(
+      var(--bg-dark) 0 25%,
+      var(--plasma-grey) 25% calc(25% + 1px),
+      transparent calc(25% + 1px) 100%
+    ),
+    repeating-linear-gradient(to right, var(--cage-pattern)),
+    repeating-linear-gradient(to bottom, var(--cage-pattern));
+}
+.blossom-mine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: inherit;
+  width: inherit;
+  --mine-aura: color(from var(--mym-orange) srgb r g b / 0.1);
+  --mine-halo: color(from var(--delete-red) srgb r g b / 0.5);
+  background: radial-gradient(
+      closest-side,
+      transparent 10%,
+      var(--mine-aura) 60%,
+      var(--mine-halo) 96%,
+      transparent 100%
+    ),
+    radial-gradient(circle at 50% 50%, var(--red-dot-big)),
+    radial-gradient(circle at 36% 35%, var(--red-dot-small)),
+    radial-gradient(circle at 57% 31%, var(--red-dot-small)),
+    radial-gradient(circle at 69% 48%, var(--red-dot-small)),
+    radial-gradient(circle at 62% 66%, var(--red-dot-small)),
+    radial-gradient(circle at 43% 69%, var(--red-dot-small)),
+    radial-gradient(circle at 31% 54%, var(--red-dot-small)),
+    radial-gradient(
+      var(--plasma-grey),
+      var(--grey-dark) 25%,
+      transparent 25% 100%
+    );
+  animation: mine 10s linear infinite;
+}
+@keyframes mine {
+  0% {
+    rotate: z 0turn;
+  }
+  100% {
+    rotate: z 1turn;
+  }
+}
+
+.blossom-check .mine-slot::before {
+  content: '';
+  position: absolute;
+  height: inherit;
+  width: inherit;
+  background: radial-gradient(
+      10% 10% at 30.5% 50%,
+      var(--cyan),
+      transparent 55%
+    ),
+    radial-gradient(10% 10% at 40% 34%, var(--cyan), transparent 55%),
+    radial-gradient(10% 10% at 60% 34%, var(--cyan), transparent 55%),
+    radial-gradient(10% 10% at 69.5% 50%, var(--cyan), transparent 55%),
+    radial-gradient(10% 10% at 40% 66%, var(--cyan), transparent 55%),
+    radial-gradient(10% 10% at 60% 66%, var(--cyan), transparent 55%),
+    radial-gradient(
+      50% 50% at 50% 50%,
+      var(--cyan) -10%,
+      var(--cyan-12) 30% 35%,
+      transparent 40%
+    ),
+    radial-gradient(
+      50% 50% at 50% 50%,
+      transparent 40%,
+      var(--cyan-12) 90%,
+      transparent 95%
+    ) !important;
+  opacity: 0.5;
+  scale: 0.6;
+  animation: mine 10s linear infinite;
+}
+.mine-slot:hover::before {
+  opacity: 1;
+  filter: hue-rotate(190deg) saturate(10) brightness(10);
+}
+[data-second-phase='true']::before {
+  content: '2';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 0.8rem;
+  width: 0.8rem;
+  line-height: 0.7rem;
+  font-size: 0.8rem;
+  color: black;
+  z-index: 12;
+  background: var(--mym-yellow);
+  padding: 1px;
+  margin: 1px;
+  border-radius: 2px;
+  box-shadow:
+    1px 1px 0 black,
+    -1px 1px 0 black,
+    1px -1px 0 black,
+    -1px -1px 0 black;
+}
+.guard::after {
+  content: '';
+  position: absolute;
+}
+.enforcer {
+  background: radial-gradient(
+      13.5% 2.5% at 50% 64%,
+      var(--teeth) 80%,
+      transparent 100%
+    ),
+    radial-gradient(13.5% 2.5% at 50% 65.5%, var(--black-60), transparent 100%),
+    radial-gradient(
+      14.5% 3% at 50% 63%,
+      var(--corrosive-bg-dark) 90%,
+      transparent 100%
+    ),
+    radial-gradient(2% 14% at 50% 13%, var(--brown) 20%, transparent),
+    radial-gradient(32% 3% at 50% 15.5%, var(--brown) 20%, transparent),
+    radial-gradient(3.5% 3% at 61% 9%, var(--metal-90-gradient)),
+    radial-gradient(3.5% 3% at 39% 9%, var(--metal-90-gradient)),
+    radial-gradient(30% 32% at 50% 33%, var(--skin-95-gradient)),
+    radial-gradient(8% 15% at 50% 102%, var(--grey) 30%, transparent 100%),
+    radial-gradient(10% 7% at 50% 92%, var(--metal-95-gradient)),
+    radial-gradient(10% 7% at 50% 94%, var(--metal-95-gradient)),
+    radial-gradient(10% 7% at 50% 96%, var(--metal-95-gradient)),
+    radial-gradient(10% 7% at 50% 98%, var(--metal-95-gradient)),
+    radial-gradient(10% 7% at 50% 100%, var(--metal-95-gradient)),
+    radial-gradient(16% 8% at 50% 89%, var(--grey) 20%, transparent 100%),
+    radial-gradient(16% 8% at 50% 87%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 79% 76%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(5% 14% at 21% 76%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(32% 14% at 50% 77%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(5% 14% at 23% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 25% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 27% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 29% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 31% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 33% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 35% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 65% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 67% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 69% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 71% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 73% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 75% 76%, var(--metal-95-gradient)),
+    radial-gradient(5% 14% at 77% 76%, var(--metal-95-gradient)),
+    radial-gradient(25% 30% at 50% 53%, var(--skin-95-gradient));
+}
+.enforcer::after {
+  top: 6px;
+  left: 5px;
+  width: 30px;
+  height: 16px;
+  background: var(--corrosive-bg);
+  background-clip: padding-box;
+  border: 8px solid var(--metal);
+  border-width: 7px 7px;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0.15rem var(--black-60),
+    inset 0 0 0.05rem var(--trap-red),
+    inset 0 0 0.1rem var(--trap-red);
+}
+.ravager {
+  background: radial-gradient(
+      30% 25% at 50% 35%,
+      var(--grey) -40%,
+      transparent 110%
+    ),
+    radial-gradient(35% 8% at 50% 50%, var(--metal) 94%, transparent 100%),
+    radial-gradient(35% 5% at 50% 54.5%, var(--metal) 94%, transparent 100%),
+    radial-gradient(35% 7% at 50% 57%, var(--black-60) 70%, transparent 100%),
+    radial-gradient(35% 21% at 50% 39%, var(--metal) 96%, transparent 100%),
+    radial-gradient(26% 22% at 50% 72%, var(--skin-95-gradient)),
+    radial-gradient(
+      28% 38% at 50% 58%,
+      var(--skin) 97%,
+      var(--black-33) 100%,
+      transparent 120%
+    ),
+    radial-gradient(35.5% 37% at 50% 44%, var(--metal) 98%, transparent 100%),
+    radial-gradient(3.5% 15% at 18% 55%, var(--metal-90-gradient)),
+    radial-gradient(3.5% 15% at 82% 55%, var(--metal-90-gradient)),
+    radial-gradient(8% 4% at 17% 30%, var(--metal-90-gradient)),
+    radial-gradient(8% 4% at 83% 30%, var(--metal-90-gradient)),
+    radial-gradient(7% 4% at 26% 16%, var(--metal-90-gradient)),
+    radial-gradient(7% 4% at 74% 16%, var(--metal-90-gradient));
+}
+.ravager::after {
+  top: 0;
+  left: 13px;
+  width: 14px;
+  height: 29px;
+  background: var(--corrosive-bg);
+  background-clip: padding-box;
+  border: 5px solid var(--metal);
+  border-width: 4px 6px;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0.15rem var(--black-60),
+    0 2px 0.05rem -0.1rem var(--corrosive-bg-dark),
+    0 5px 0.025rem -0.1rem var(--teeth),
+    0 6px 0.05rem -0.1rem var(--corrosive-bg-dark),
+    0 5.5px 0.015rem -0.05rem black,
+    0 5.5px 0.015rem -0.025rem var(--brown),
+    inset 0 0 0.05rem var(--trap-red),
+    inset 0 0 0.1rem var(--trap-red);
+}
+.cannonback {
+  background: radial-gradient(
+      3% 2% at 47% 56%,
+      black,
+      var(--brown) 50% 70%,
+      transparent 100%
+    ),
+    radial-gradient(
+      3% 2% at 53% 56%,
+      black,
+      var(--brown) 50% 70%,
+      transparent 100%
+    ),
+    radial-gradient(12% 4% at 50% 59%, var(--skin) 90%, transparent 100%),
+    radial-gradient(
+      9.5% 3% at 50% 62%,
+      var(--corrosive-bg-dark) 70%,
+      transparent 100%
+    ),
+    radial-gradient(8.5% 3% at 50% 64.5%, var(--teeth) 90%, transparent 100%),
+    radial-gradient(12% 7% at 50% 69%, black 40%, transparent 100%),
+    radial-gradient(12.5% 6% at 50% 71%, var(--brown) 90%, transparent 100%),
+    radial-gradient(11% 7% at 50% 68%, var(--brown) 90%, transparent 100%),
+    radial-gradient(12.5% 7% at 50% 73%, var(--teeth) 90%, transparent 100%),
+    radial-gradient(
+      13% 7% at 50% 75%,
+      var(--corrosive-bg-dark) 95%,
+      transparent 100%
+    ),
+    radial-gradient(29% 33% at 50% 44%, var(--skin-95-gradient)),
+    radial-gradient(11% 20% at 24% 48%, var(--metal-95-gradient)),
+    radial-gradient(
+      30% 20% at 50% 52%,
+      var(--skin) 90%,
+      var(--black-33) 93%,
+      transparent
+    ),
+    radial-gradient(
+      4.5% 3.5% at 77.5% 55%,
+      var(--skin),
+      var(--brown) 50%,
+      var(--skin) 80%,
+      transparent
+    ),
+    radial-gradient(4% 6% at 77% 57%, var(--skin) 80%, transparent),
+    radial-gradient(
+      4% 6% at 79.5% 52%,
+      var(--skin) 30%,
+      var(--brown) 60%,
+      var(--skin) 80%,
+      transparent
+    ),
+    radial-gradient(24% 40% at 50% 50%, var(--skin-95-gradient));
+}
+.cannonback::after {
+  height: inherit;
+  width: inherit;
+  top: 0;
+  left: 0;
+  background: radial-gradient(1.5% 10.5% at 32% 50%, var(--grey-90-gradient)),
+    radial-gradient(1.5% 10.5% at 26% 50%, var(--grey-90-gradient)),
+    radial-gradient(4% 1.25% at 29% 41%, var(--grey-90-gradient)),
+    radial-gradient(4% 1.25% at 29% 59%, var(--grey-90-gradient)),
+    radial-gradient(2% 2% at 13% 50%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(10% 1.5% at 17% 50%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2% 6% at 14% 50%, var(--metal), transparent),
+    radial-gradient(2.5% 6% at 13% 50%, var(--grey-90-gradient)),
+    radial-gradient(3% 8% at 13% 52%, var(--metal-90-gradient)),
+    radial-gradient(
+      circle at 29% 50%,
+      var(--corrosive-bg) 2px,
+      var(--trap-red) 3px,
+      var(--metal) 4px 13%,
+      var(--grey),
+      transparent 15.5%
+    ),
+    radial-gradient(
+      15% 10% at 67% 53%,
+      white 0.5px,
+      var(--trap-red) 1px,
+      var(--brown) 2px,
+      transparent 3px
+    );
+  filter: drop-shadow(0 0.025rem 0.025rem black);
+}
+
+.burster {
+  background: radial-gradient(
+      2.25% 2% at 39% 21%,
+      var(--metal),
+      var(--grey) 65%,
+      var(--brown) 75%,
+      transparent 110%
+    ),
+    radial-gradient(
+      5% 5% at 39% 21%,
+      var(--corrosive-bg-dark) -200%,
+      transparent
+    ),
+    radial-gradient(
+      2.25% 3% at 35% 32%,
+      var(--metal),
+      var(--grey) 65%,
+      var(--brown) 75%,
+      transparent 110%
+    ),
+    radial-gradient(
+      5% 8% at 35% 33%,
+      var(--corrosive-bg-dark) -120%,
+      transparent
+    ),
+    radial-gradient(
+      2.75% 3% at 61% 38%,
+      black,
+      var(--grey) 35% 65%,
+      var(--brown) 75%,
+      transparent 110%
+    ),
+    radial-gradient(
+      5% 7% at 61% 39%,
+      var(--corrosive-bg-dark) -150%,
+      transparent
+    ),
+    radial-gradient(29% 31% at 50% 41%, var(--skin) 0 95%, transparent 100%),
+    radial-gradient(27.5% 36% at 50% 52%, var(--skin) 0 95%, transparent 100%);
+}
+.burster::after {
+  top: 10px;
+  left: 9px;
+  width: 22px;
+  height: 30px;
+  background: radial-gradient(
+      15% 8% at 24% 31%,
+      white 0.5px,
+      var(--trap-red) 1px,
+      var(--brown) 1.5px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 72% 34%,
+      var(--corrosive-bg) 1.5px,
+      var(--trap-red),
+      var(--grey) 2.5px 3px,
+      transparent 3.25px
+    ),
+    radial-gradient(18% 2% at 93% 33%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(
+      6% 3% at 50% 37%,
+      var(--metal) 60%,
+      var(--grey) 90%,
+      transparent
+    ),
+    radial-gradient(25% 2% at 50% 82%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(21% 2% at 50% 77%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(16% 2% at 50% 45%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2% 4% at 38% 43%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2% 4% at 62% 43%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(21% 2% at 50% 52%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(1.5% 8% at 48% 53%, var(--plasma-orange) 90%, transparent),
+    radial-gradient(1.5% 8% at 52% 53%, var(--plasma-orange) 90%, transparent),
+    radial-gradient(
+      8% 3.5% at 50% 60%,
+      var(--black-60) 20%,
+      var(--grey) 60%,
+      var(--metal),
+      transparent 100%
+    ),
+    radial-gradient(8% 3.5% at 50% 62%, var(--grey-90-gradient)),
+    radial-gradient(10% 4.5% at 50% 62%, var(--metal-90-gradient)),
+    radial-gradient(10% 5% at 50% 64%, var(--grey-90-gradient)),
+    radial-gradient(8% 4.5% at 50% 68%, var(--black-33) 90%, transparent),
+    radial-gradient(1.5% 9% at 43% 54%, var(--plasma-orange) 90%, transparent),
+    radial-gradient(1.5% 9% at 57% 54%, var(--plasma-orange) 90%, transparent),
+    radial-gradient(18% 1.5% at 50% 59%, var(--plasma-orange) 90%, transparent),
+    radial-gradient(1.5% 12% at 32% 64%, var(--grey) 50%, transparent),
+    radial-gradient(1.5% 12% at 68% 64%, var(--grey) 50%, transparent),
+    radial-gradient(2% 8% at 8% 64%, var(--metal-90-gradient)),
+    radial-gradient(3.5% 11% at 10% 64%, var(--grey-90-gradient)),
+    radial-gradient(1.5% 11% at 19% 64%, var(--grey) 50%, transparent),
+    radial-gradient(4% 9% at 15% 64%, var(--black-33) 90%, transparent),
+    radial-gradient(2% 8% at 92% 64%, var(--metal-90-gradient)),
+    radial-gradient(3.5% 11% at 90% 64%, var(--grey-90-gradient)),
+    radial-gradient(1.5% 11% at 81% 64%, var(--grey) 50%, transparent),
+    radial-gradient(4% 9% at 85% 64%, var(--black-33) 90%, transparent),
+    radial-gradient(50% 11% at 50% 64%, var(--grey) -20%, transparent),
+    radial-gradient(30% 11% at 34% 64%, var(--metal-90-gradient)),
+    radial-gradient(17% 10.5% at 22% 64%, var(--metal-90-gradient)),
+    radial-gradient(17% 10.5% at 78% 64%, var(--metal-90-gradient)),
+    radial-gradient(30% 11% at 66% 64%, var(--metal-90-gradient)),
+    radial-gradient(2% 6% at 27% 77%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2% 6% at 73% 77%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(
+      25% 20% at 50% 64%,
+      var(--metal) 65%,
+      var(--grey) 70%,
+      var(--metal) 80%,
+      var(--grey) 90% 95%,
+      transparent 100%
+    ),
+    radial-gradient(18% 24% at 50% 57%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(
+      50% 3.5% at 10% 39%,
+      var(--grey) -50%,
+      var(--metal) 95%,
+      transparent 100%
+    );
+  filter: drop-shadow(0 0.025rem 0.025rem black);
+}
+
+.warmonger {
+  background: radial-gradient(
+      14% 10% at 101% 32%,
+      var(--metal) 42%,
+      var(--grey) 45% 52%,
+      var(--metal) 55% 85%,
+      var(--brown) 87%,
+      transparent 100%
+    ),
+    radial-gradient(
+      14% 10% at -4% 32%,
+      var(--metal) 42%,
+      var(--grey) 45% 52%,
+      var(--metal) 55% 85%,
+      var(--brown) 87%,
+      transparent 100%
+    ),
+    radial-gradient(2.5% 6.5% at 80% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 83% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 86% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 89% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 92% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 95% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 98% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 101% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(50% 3% at 95% 78%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(50% 3% at 95% 62%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(50% 3% at 95% 57%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 20% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 17% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 14% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 11% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 8% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 5% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at 2% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 6.5% at -1% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(50% 3% at 5% 78%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(50% 3% at 5% 62%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(50% 3% at 5% 57%, var(--shaded-grey-to-metal-gradient)),
+    linear-gradient(
+      to bottom,
+      transparent 52.5%,
+      var(--brown) 54% 81%,
+      transparent 82.5%
+    ),
+    radial-gradient(7% 7% at 50% 92%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(
+      16% 40% at 50% 90%,
+      var(--grey),
+      var(--metal) 90%,
+      var(--brown) 90%,
+      transparent 100%
+    ),
+    radial-gradient(200% 100% at 50% 60%, var(--skin) 50%, transparent 51.5%);
+}
+.warmonger::after {
+  height: inherit;
+  width: inherit;
+  left: 0;
+  top: 0;
+  background: radial-gradient(
+      7% 7% at -2.5% 81%,
+      var(--shaded-grey-to-metal-gradient)
+    ),
+    radial-gradient(7% 7% at 1% 83%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 5% 84.5%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 9% 86%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 13.5% 87%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 18% 87%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 22% 85%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 24.5% 81.5%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 27% 78%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 29% 74%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 31% 70%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 32.5% 66%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 34% 62%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 35% 58%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 36% 54.5%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 7% at 37% 51.5%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(
+      13% 13% at 37% 51%,
+      var(--grey) 30%,
+      var(--metal) 70%,
+      black 75%,
+      var(--brown),
+      transparent 100%
+    ),
+    radial-gradient(3.5% 12% at 37% 18%, var(--metal-90-gradient)),
+    radial-gradient(3% 11% at 27% 24%, var(--metal-90-gradient)),
+    radial-gradient(8% 3.5% at 19% 40%, var(--metal-90-gradient)),
+    radial-gradient(4% 6% at 49.5% 61%, black, transparent 80%),
+    radial-gradient(7% 4% at 51% 63%, black, var(--brown) 80%, transparent 100%),
+    radial-gradient(4.5% 6% at 49.5% 61%, var(--brown) 80%, transparent 100%),
+    radial-gradient(14% 4% at 46% 66%, var(--skin) 85%, transparent 100%),
+    radial-gradient(14% 4% at 46.5% 68%, var(--brown) 80%, transparent 100%),
+    radial-gradient(
+      circle at 63% 51%,
+      var(--corrosive-bg) 1.5px,
+      var(--trap-red) 2px,
+      var(--grey),
+      transparent 3px
+    ),
+    radial-gradient(
+      4.5% 4.5% at 72.5% 59%,
+      var(--metal),
+      var(--grey),
+      var(--metal) 90%,
+      transparent 100%
+    ),
+    radial-gradient(
+      6.5% 4.5% at 68.5% 50%,
+      black,
+      var(--metal) 70%,
+      var(--grey) 80%,
+      transparent 100%
+    ),
+    radial-gradient(6% 2.5% at 75% 50%, var(--grey-90-gradient)),
+    radial-gradient(
+      1.5% 1.5% at 78.5% 46%,
+      var(--shaded-grey-to-metal-gradient)
+    ),
+    radial-gradient(
+      1.5% 1.5% at 78.5% 54%,
+      var(--shaded-grey-to-metal-gradient)
+    ),
+    radial-gradient(4% 10% at 76.5% 50%, var(--metal), transparent 100%),
+    radial-gradient(2.5% 8% at 79% 50%, var(--grey-90-gradient)),
+    radial-gradient(12% 10% at 64% 51%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 4% at 71% 38%, var(--metal-90-gradient)),
+    radial-gradient(5% 8% at 68% 43%, var(--metal-95-gradient)),
+    radial-gradient(7% 14% at 74% 49%, var(--metal-95-gradient)),
+    radial-gradient(15% 5% at 50% 72%, var(--teeth) 75%, transparent 100%),
+    radial-gradient(
+      16% 6% at 50% 73%,
+      var(--corrosive-bg-dark) 90%,
+      transparent 100%
+    ),
+    radial-gradient(16% 6% at 50% 71%, var(--brown) 85%, transparent 100%),
+    radial-gradient(30% 34% at 50% 41%, var(--skin-95-gradient)),
+    radial-gradient(31% 34% at 50% 56%, var(--skin-95-gradient)),
+    radial-gradient(31% 21% at 50% 64%, var(--skin-95-gradient)),
+    radial-gradient(25% 32% at 50% 60.5%, var(--skin-95-gradient)),
+    radial-gradient(8% 6% at 53% 88%, var(--skin) 80%, transparent 100%),
+    radial-gradient(8% 6% at 47% 88%, var(--skin) 80%, transparent 100%);
+  filter: drop-shadow(0 0.025rem 0.075rem #000);
+}
+
+.assassin {
+  perspective: 1rem;
+  background: radial-gradient(
+      4.5% 8% at 50% 62%,
+      black,
+      var(--brown) 80%,
+      transparent 100%
+    ),
+    radial-gradient(3% 7% at 52% 65%, var(--brown) 80%, transparent 100%),
+    radial-gradient(3% 7% at 48% 65%, var(--brown) 80%, transparent 100%),
+    radial-gradient(
+      10% 10% at 37% 50%,
+      var(--corrosive-orange) 16%,
+      var(--trap-red) 18%,
+      var(--metal) 40% 46%,
+      black 50%,
+      var(--brown) 65%,
+      transparent 90%
+    ),
+    radial-gradient(
+      10% 10% at 63% 50%,
+      var(--corrosive-orange) 16%,
+      var(--trap-red) 18%,
+      var(--metal) 40% 46%,
+      black 50%,
+      var(--brown) 65%,
+      transparent 90%
+    ),
+    radial-gradient(27% 16% at 50% 60%, var(--skin-95-gradient)),
+    radial-gradient(16% 10% at 50% 73%, var(--skin-95-gradient)),
+    radial-gradient(15% 6.5% at 50% 77%, var(--skin-95-gradient)),
+    radial-gradient(
+      14% 5% at 50% 81%,
+      var(--corrosive-bg-dark) 80%,
+      transparent 100%
+    ),
+    radial-gradient(2% 6% at 60% 83%, var(--teeth) 95%, transparent 100%),
+    radial-gradient(2% 6% at 55% 84.5%, var(--teeth) 95%, transparent 100%),
+    radial-gradient(2% 6% at 50% 85%, var(--teeth) 95%, transparent 100%),
+    radial-gradient(2% 6% at 45% 84.5%, var(--teeth) 95%, transparent 100%),
+    radial-gradient(2% 6% at 40% 83%, var(--teeth) 95%, transparent 100%),
+    radial-gradient(7% 7% at 88% 98%, var(--grey) 95%, transparent 100%),
+    radial-gradient(7% 7% at 86% 94%, var(--grey) 95%, transparent 100%),
+    radial-gradient(7% 7% at 82% 91%, var(--grey) 95%, transparent 100%),
+    radial-gradient(7% 7% at 78% 89%, var(--grey) 95%, transparent 100%),
+    radial-gradient(5% 7% at 74% 89%, var(--grey) 95%, transparent 100%),
+    radial-gradient(
+      5% 10% at 71% 89%,
+      var(--grey) 20%,
+      var(--metal) 95%,
+      transparent 100%
+    ),
+    radial-gradient(5% 10% at 70% 89%, var(--metal-95-gradient)),
+    radial-gradient(7% 7% at 12% 98%, var(--grey) 95%, transparent 100%),
+    radial-gradient(7% 7% at 14% 94%, var(--grey) 95%, transparent 100%),
+    radial-gradient(7% 7% at 18% 91%, var(--grey) 95%, transparent 100%),
+    radial-gradient(7% 7% at 22% 89%, var(--grey) 95%, transparent 100%),
+    radial-gradient(5% 7% at 26% 89%, var(--grey) 95%, transparent 100%),
+    radial-gradient(5% 10% at 29% 89%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(5% 10% at 30% 89%, var(--metal-95-gradient)),
+    radial-gradient(32% 8% at 50% 89%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(11% 20% at 50% 97%, var(--metal-95-gradient)),
+    radial-gradient(3% 11% at 20% 61%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(5% 13% at 23% 60%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(6% 8% at 26% 65%, var(--metal-95-gradient)),
+    radial-gradient(6% 8% at 30% 65%, var(--metal-95-gradient)),
+    radial-gradient(3% 11% at 80% 61%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(5% 13% at 77% 60%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(6% 8% at 70% 65%, var(--metal-95-gradient)),
+    radial-gradient(6% 8% at 74% 65%, var(--metal-95-gradient)),
+    radial-gradient(3% 1.5% at 63% 11%, var(--metal-90-gradient)),
+    radial-gradient(3% 1.5% at 37% 11%, var(--metal-90-gradient)),
+    radial-gradient(4.5% 2% at 50% 14%, var(--metal-90-gradient)),
+    radial-gradient(
+      3% 1.5% at 63% 11%,
+      var(--corrosive-bg-dark) -50%,
+      transparent 160%
+    ),
+    radial-gradient(
+      3% 1.5% at 37% 11%,
+      var(--corrosive-bg-dark) -50%,
+      transparent 160%
+    ),
+    radial-gradient(
+      4.5% 2% at 50% 14%,
+      var(--corrosive-bg-dark) -50%,
+      transparent 160%
+    ),
+    radial-gradient(32% 35% at 50% 40%, var(--skin-95-gradient));
+}
+.assassin::after {
+  height: 30%;
+  width: 88%;
+  top: 27%;
+  left: 6%;
+  background: linear-gradient(
+    to right,
+    transparent 21%,
+    var(--brown) 23%,
+    var(--skin-light) 24% 25%,
+    var(--skin) 25% 26%,
+    transparent 26% 74%,
+    var(--skin) 74% 75%,
+    var(--skin-light) 75% 76%,
+    var(--brown) 77%,
+    transparent 79%
+  );
+  transform: rotateX(10deg);
+}
+
+.hornet {
+  background: radial-gradient(8% 38% at 50% 100%, var(--grey), transparent 100%),
+    radial-gradient(9% 9% at 50% 100%, var(--metal-95-gradient)),
+    radial-gradient(9% 9% at 50% 95%, var(--metal-95-gradient)),
+    radial-gradient(9% 9% at 50% 90%, var(--metal-95-gradient)),
+    radial-gradient(9% 9% at 50% 85%, var(--metal-95-gradient)),
+    radial-gradient(9% 9% at 50% 80%, var(--metal-95-gradient)),
+    radial-gradient(9% 9% at 50% 75%, var(--metal-95-gradient)),
+    radial-gradient(9% 9% at 50% 70%, var(--metal-95-gradient)),
+    radial-gradient(15% 15% at 50% 68%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2.5% 3% at 50% 3%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(7% 4% at 50% 5%, var(--shaded-grey-to-metal-gradient)),
+    radial-gradient(2% 2% at 63% 11%, var(--metal-90-gradient)),
+    radial-gradient(2% 2% at 37% 11%, var(--metal-90-gradient)),
+    radial-gradient(3.5% 3% at 57% 15.5%, var(--metal-90-gradient)),
+    radial-gradient(3.5% 3% at 43% 15.5%, var(--metal-90-gradient)),
+    radial-gradient(5% 1% at 60% 12.5%, var(--brown), transparent),
+    radial-gradient(5% 1% at 40% 12.5%, var(--brown), transparent),
+    radial-gradient(29% 31% at 50% 33%, var(--skin-95-gradient)),
+    radial-gradient(24% 30% at 50% 53%, var(--skin-95-gradient));
+}
+.hornet::after {
+  content: 'I';
+  font-size: 14px;
+  line-height: 16px;
+  text-align: left;
+  padding-left: 4px;
+  top: 8px;
+  left: 5px;
+  height: 16px;
+  width: 30px;
+  color: var(--corrosive-bg);
+  text-shadow:
+    0 0 2px var(--trap-red),
+    0 0 2px var(--trap-red),
+    0 0 2px var(--trap-red);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--grey) 0 3.25px,
+    var(--metal) 3.25px 6.5px
+  );
+  border-radius: 2px;
+  filter: drop-shadow(0 1px 0.075rem var(--black-60));
+}
+
+.genmat {
+  position: relative;
+  border-style: solid;
+  border-color: var(--plasma-grey-dark);
+  border-width: 4px 0 2px;
+  border-radius: 1px 1px 0 0;
+  background: radial-gradient(
+      8% 3% at 50% 50%,
+      var(--delete-red-40) 90%,
+      transparent 100%
+    ),
+    radial-gradient(8% 20% at 50% 40%, var(--grey) -90%, transparent 100%),
+    radial-gradient(8% 8% at 50% 45%, var(--metal-95-gradient)),
+    radial-gradient(7% 9% at 50% 39%, var(--metal-95-gradient)),
+    radial-gradient(2% 6% at 40% 18%, var(--grey) -80%, transparent 100%),
+    radial-gradient(2% 6% at 40% 18%, var(--metal-95-gradient)),
+    radial-gradient(2% 6% at 60% 18%, var(--grey) -80%, transparent 100%),
+    radial-gradient(2% 6% at 60% 18%, var(--metal-95-gradient)),
+    radial-gradient(8% 18% at 50% 25%, var(--grey) -100%, transparent 100%),
+    radial-gradient(10% 4% at 50% 18%, var(--metal-95-gradient)),
+    radial-gradient(21% 38% at 50% -17%, var(--grey) 30%, transparent 100%),
+    radial-gradient(21% 38% at 50% -17%, var(--metal-95-gradient)),
+    radial-gradient(2% 15% at 46.5% 20%, var(--grey) 95%, transparent 100%),
+    radial-gradient(2% 15% at 53.5% 20%, var(--grey) 95%, transparent 100%),
+    radial-gradient(6% 20% at 50% 25%, var(--metal-95-gradient)),
+    radial-gradient(
+      8% 3% at 50% 74%,
+      var(--delete-red-40) 90%,
+      transparent 100%
+    ),
+    radial-gradient(8% 20% at 50% 85%, var(--grey) -90%, transparent 100%),
+    radial-gradient(8% 7% at 50% 78%, var(--metal-95-gradient)),
+    radial-gradient(7% 14% at 50% 86%, var(--metal-95-gradient)),
+    linear-gradient(
+      to right,
+      transparent 47.5%,
+      var(--trap-red) 47.5%,
+      var(--delete-red-40) 52.5%,
+      transparent 52.5%
+    ),
+    radial-gradient(45% 80% at 50% 63%, var(--trap-red) -50%, transparent),
+    radial-gradient(
+      8% 5% at 98% 100%,
+      var(--plasma-grey-dark) 90%,
+      transparent 100%
+    ),
+    radial-gradient(
+      8% 5% at 2% 100%,
+      var(--plasma-grey-dark) 90%,
+      transparent 100%
+    );
+  filter: saturate(1);
+}
+.genmat::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 3px;
+  height: 100%;
+  width: calc(100% - 6px);
+
+  border-style: solid;
+  border-width: 2px 13px 3px;
+  border-color: var(--plasma-grey) transparent var(--plasma-grey);
+}
+
+#grid {
+  cursor: copy;
+  display: inline-grid;
+  grid-template: repeat(25, 1fr) / repeat(25, 1fr);
+
+  --bg-edge-fadeout: var(--bg-dark), transparent calc(var(--tile-size) * 0.5),
+    transparent calc(100% - var(--tile-size) * 0.5), var(--bg-dark);
+  --bg-thick-pattern: var(--grid-thick-color), var(--grid-thick-color) 1px,
+    transparent 1px, transparent calc(var(--tile-size) * 5 + 9px),
+    var(--grid-thick-color) calc(var(--tile-size) * 5 + 9px),
+    var(--grid-thick-color) calc(var(--tile-size) * 5 + 10px);
+  --bg-pattern: var(--grid-color), var(--grid-color) 1px, transparent 1px,
+    transparent calc(var(--tile-size) + 1px),
+    var(--grid-color) calc(var(--tile-size) + 1px),
+    var(--grid-color) calc(var(--tile-size) + 2px);
+  background: linear-gradient(to bottom, var(--bg-edge-fadeout)),
+    linear-gradient(to right, var(--bg-edge-fadeout)),
+    repeating-linear-gradient(to right, var(--bg-thick-pattern)),
+    repeating-linear-gradient(to bottom, var(--bg-thick-pattern)),
+    repeating-linear-gradient(to right, var(--bg-pattern)),
+    repeating-linear-gradient(to bottom, var(--bg-pattern));
+  margin: 4rem;
+}
+
+.cur-move #grid {
+  cursor: move;
+}
+.cur-genmat #grid {
+  cursor: crosshair;
+}
+
+.tile {
+  position: relative;
+  height: var(--tile-size);
+  width: var(--tile-size);
+  animation: placed 250ms cubic-bezier(0.5, 2, 0.15, 0.5);
+  transition: all 150ms;
+}
+
+.slot {
+  height: calc(var(--tile-size) + 2px);
+  width: calc(var(--tile-size) + 2px);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-clip: content-box !important;
+}
+
+#grid:has(.dragging) .tile:not(.dragging),
+.drag-target * {
+  pointer-events: none;
+}
+
+.drag-target {
+  outline: 2px solid var(--grid-selector-outline);
+  background: var(--grid-selector-bg);
+  outline-offset: -1px;
+}
+.drag-target:has(.tile) {
+  outline: 2px dashed var(--swap-target-outline);
+  background: none;
+  z-index: 10;
+}
+.slot:has(.dragging) {
+  outline-color: transparent !important;
+  background: transparent !important;
+}
+.dragging {
+  opacity: 0.5;
+  transition: scale 250ms;
+  scale: 0.8;
+}
+[data-traps-on],
+.cursor-edit,
+.cursor-second,
+.cursor-rotate,
+.cursor-transport,
+.cursor-copy,
+.cursor-delete,
+.drag-target {
+  container: tile / size;
+}
+[data-traps-on]::after,
+.cursor-edit::after,
+.cursor-second::after,
+.cursor-rotate::after,
+.cursor-transport::after,
+.cursor-copy::after,
+.cursor-delete::after,
+.drag-target:has(.tile)::after {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+  width: inherit;
+  font-size: 75cqh;
+  line-height: 1rem;
+  font-weight: bold;
+  z-index: 10;
+  text-shadow: 0 0 0.15rem black;
+}
+[data-traps-on]::after {
+  top: -2px;
+  left: -2px;
+  cursor: inherit;
+  content: '';
+  border: 3px solid transparent;
+  filter: drop-shadow(1px 0 0 #222) drop-shadow(-1px 0 0 #222)
+    drop-shadow(0 -1px 0 #222) drop-shadow(0 1px 0 #222);
+}
+[data-traps-on='1']::after {
+  border-top-color: var(--trap-red) !important;
+}
+[data-traps-on='12']::after {
+  border-top-color: var(--trap-red) !important;
+  border-right-color: var(--trap-red) !important;
+}
+[data-traps-on='13']::after {
+  border-color: var(--trap-red) transparent !important;
+}
+[data-traps-on='123']::after {
+  border-color: var(--trap-red) !important;
+  border-left-color: transparent !important;
+}
+[data-traps-on='1234']::after {
+  border-color: var(--trap-red) !important;
+}
+[data-traps-on='a']::after {
+  border-bottom-color: var(--trap-red) !important;
+}
+[data-traps-on='b']::after {
+  border-left-color: var(--trap-red) !important;
+}
+[data-traps-on='c']::after {
+  background-clip: padding-box !important;
+  background: linear-gradient(
+    45deg,
+    transparent calc(50% - 2.83px),
+    var(--trap-red) calc(50% - 2.83px) 50%,
+    transparent 50.1%
+  );
+}
+[data-traps-on='ab']::after {
+  border-bottom-color: var(--trap-red) !important;
+  border-left-color: var(--trap-red) !important;
+}
+[data-traps-on='ac']::after {
+  background-clip: padding-box !important;
+  border-bottom-color: var(--trap-red) !important;
+  background: linear-gradient(
+    45deg,
+    transparent calc(50% - 2.83px),
+    var(--trap-red) calc(50% - 2.83px) 50%,
+    transparent 50%
+  );
+}
+[data-traps-on='bc']::after {
+  background-clip: padding-box !important;
+  border-left-color: var(--trap-red) !important;
+  background: linear-gradient(
+    45deg,
+    transparent calc(50% - 2.83px),
+    var(--trap-red) calc(50% - 2.83px) 50%,
+    transparent 50%
+  );
+}
+[data-traps-on='abc']::after {
+  background-clip: padding-box !important;
+  border-bottom-color: var(--trap-red) !important;
+  border-left-color: var(--trap-red) !important;
+  background: linear-gradient(
+    45deg,
+    transparent calc(50% - 2.83px),
+    var(--trap-red) calc(50% - 2.83px) 50%,
+    transparent 50%
+  );
+}
+
+.cursor-edit:has(.block)::after {
+  content: '🛠';
+  font-weight: normal;
+  color: white;
+  background: var(--grid-selector-bg);
+  outline: 2px dashed var(--grid-selector-outline);
+}
+.cursor-rotate:has(.block)::after {
+  content: '⭮';
+  color: var(--cyan);
+  background: var(--cyan-12);
+  outline: 2px dashed var(--cyan);
+}
+.cursor-second:has(.trap, .block[data-traps-on])::after {
+  content: '2nd';
+  font: inherit;
+  color: var(--swap-target-outline);
+  background: var(--swap-target-bg);
+  outline: 2px dashed var(--swap-target-outline);
+}
+.cursor-second:has([data-second-phase='true'])::after {
+  content: '';
+}
+.cursor-transport::after,
+.drag-target:has(.tile)::after {
+  content: '⇅';
+  color: var(--swap-target-outline);
+  background: var(--swap-target-bg);
+  outline: 2px dashed var(--swap-target-outline);
+  rotate: -90deg;
+}
+.cursor-copy:has(:not(.genmat))::after {
+  content: '⎘';
+  color: var(--holo-green);
+  background: var(--holo-green-40);
+  outline: 2px dashed var(--holo-green);
+  rotate: -90deg;
+}
+.cursor-delete::after {
+  content: '⨯';
+  color: var(--delete-red);
+  background: var(--delete-red-40);
+  outline: 2px dashed var(--delete-red);
+}
+[data-rotation] {
+  transition: rotate 150ms;
+  rotate: 0deg;
+}
+[data-rotation='90'] {
+  rotate: 90deg;
+}
+[data-rotation='180'] {
+  rotate: 180deg;
+}
+[data-rotation='270'] {
+  rotate: 270deg;
+}
+[data-rotation]::before {
+  rotate: 0deg;
+}
+[data-rotation='90']::before {
+  rotate: -90deg;
+  right: unset;
+  bottom: unset;
+  top: 0;
+  left: 0;
+}
+[data-rotation='180']::before {
+  rotate: -180deg;
+  top: unset;
+  right: unset;
+  bottom: 0;
+  left: 0;
+}
+[data-rotation='270']::before {
+  rotate: -270deg;
+  top: unset;
+  left: unset;
+  bottom: 0;
+  right: 0;
+}
+@keyframes placed {
+  0% {
+    scale: 0.6;
+  }
+  100% {
+    scale: 1;
+  }
+}

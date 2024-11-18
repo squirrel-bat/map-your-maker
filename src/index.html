@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Map Your Maker</title>
+    <meta
+      name="description"
+      content="A tool to plan trap setups for the game Meet Your Maker."
+    />
+    <meta charset="UTF-8" lang="en" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <div id="welcome">
+      <img src="./map-your-maker-logo.svg" alt="logo" />
+      <h1>Map Your Maker</h1>
+      <p>A sketching tool for Meet Your Maker.</p>
+      <div id="start-btn">Press Any Key</div>
+    </div>
+
+    <div id="main" hidden>
+      <div id="top-bar" class="bar">
+        <div class="bar-grp history-btns">
+          <button id="history-undo" title="Undo [Z]">↩</button>
+          <button id="help-btn" title="Help [H]">?</button>
+          <button id="history-redo" title="Redo [Y]">↪</button>
+        </div>
+      </div>
+      <div id="bottom-bar" class="bar">
+        <div class="bar-grp">
+          <button id="zoom-out" title="Zoom Out [Ctrl + Mousewheel Down]">
+            -
+          </button>
+          <button id="zoom-val" title="Reset Zoom [0]">100%</button>
+          <button id="zoom-in" title="Zoom In [Ctrl + Mousewheel Up]">+</button>
+        </div>
+      </div>
+      <div id="keymap">
+        <div id="keymap-hint">
+          Hold Key +
+          <div class="lmb mouse">&nbsp;</div>
+        </div>
+        <div class="keys">
+          <kbd>E</kbd>
+          <span>Edit Traps</span>
+          <kbd>S</kbd>
+          <span>Second Wave</span>
+          <kbd>R</kbd>
+          <span>Rotate</span>
+          <kbd>T</kbd>
+          <span>Move</span>
+          <kbd>C</kbd>
+          <span>Copy</span>
+          <kbd>D</kbd>
+          <span>Delete</span>
+          <div class="hint red-hint">
+            <kbd>G</kbd>
+            <span>GenMat</span>
+          </div>
+        </div>
+        <div id="press-hint">Press Key:</div>
+        <div class="keys">
+          <kbd>I</kbd>
+          <span>Import</span>
+          <kbd>O</kbd>
+          <span>Export</span>
+          <kbd>P</kbd>
+          <span>Purge</span>
+          <kbd>Z</kbd>
+          <span>Undo</span>
+          <kbd>Y</kbd>
+          <span>Redo</span>
+          <kbd>H</kbd>
+          <span>Help</span>
+        </div>
+      </div>
+      <div id="toolbar">
+        <h2>Blocks</h2>
+        <div id="blocks" class="tool-grp">
+          <div class="tool-grp-label" data-tool-grp="1">
+            <div id="selected-tool" class="block block-full"></div>
+            <div class="block block-half"></div>
+          </div>
+        </div>
+        <h2>Traps</h2>
+        <div id="traps" class="tool-grp">
+          <div class="tool-grp-label" data-tool-grp="2">
+            <div class="trap corrosive" title="Corrosive Cube"></div>
+            <div
+              class="trap corrosive opaque"
+              title="Opaque Corrosive Cube"
+            ></div>
+          </div>
+          <div class="tool-grp-label" data-tool-grp="3">
+            <div class="trap holo" title="Holocube"></div>
+          </div>
+          <div class="tool-grp-label" data-tool-grp="4">
+            <div class="trap blossom" title="Death Blossom"></div>
+            <div
+              class="trap blossom-mine"
+              title="Mine from a Death Blossom"
+            ></div>
+          </div>
+          <div class="tool-grp-label" data-tool-grp="5">
+            <div class="trap plasma" title="Plasma Sentinel"></div>
+          </div>
+        </div>
+        <h2>Guards</h2>
+        <div id="guards" class="tool-grp">
+          <div class="tool-grp-label" data-tool-grp="6">
+            <div class="guard enforcer" title="Enforcer"></div>
+            <div class="guard ravager" title="Ravager"></div>
+          </div>
+          <div class="tool-grp-label" data-tool-grp="7">
+            <div class="guard cannonback" title="Cannonback"></div>
+            <div class="guard burster" title="Burster"></div>
+          </div>
+          <div class="tool-grp-label" data-tool-grp="8">
+            <div class="guard warmonger" title="Warmonger"></div>
+            <div class="guard assassin" title="Assassin"></div>
+          </div>
+          <div class="tool-grp-label" data-tool-grp="9">
+            <div class="guard hornet" title="Hornet"></div>
+          </div>
+        </div>
+      </div>
+      <dialog id="import">
+        <h3>Import Map</h3>
+        <form method="dialog">
+          <input type="file" id="import-file" required />
+          <div class="buttons">
+            <button class="confirm" value="confirm"><kbd>F</kbd>Import</button>
+            <button value="cancel" formnovalidate autofocus>
+              <kbd class="half-cornered">ESC</kbd>Cancel
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="export">
+        <h3>Export Map</h3>
+        <form method="dialog">
+          <input
+            type="text"
+            id="filename"
+            placeholder="Map name (case sensitive)"
+            pattern="^$|[^\\/:\x22*?<>\|]+"
+            maxlength="250"
+            onkeydown="((e) => {e.stopPropagation()})(event)"
+          />
+          <div class="buttons">
+            <button class="confirm" value="confirm"><kbd>F</kbd>Export</button>
+            <button value="cancel" formnovalidate autofocus>
+              <kbd class="half-cornered">ESC</kbd>Cancel
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="purge">
+        <h3>Remove All Items</h3>
+        <form method="dialog">
+          <p>
+            This will <span class="warning">DELETE ALL</span> building items
+            from your current map.
+          </p>
+          <p>Are you sure you want to do this?</p>
+          <div class="buttons">
+            <button class="confirm" value="confirm"><kbd>F</kbd>Yes</button>
+            <button value="cancel" formnovalidate autofocus>
+              <kbd class="half-cornered">ESC</kbd>Cancel
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="help">
+        <h3>Help</h3>
+        <div id="help-body">
+          <nav>
+            <h4>// Interface</h4>
+            <button data-page="ui" class="active">Overview</button>
+            <h4>// Modes</h4>
+            <button data-page="mode-placing">Place Items</button>
+            <button data-page="mode-edit">Edit Traps</button>
+            <button data-page="mode-second-wave">Second Wave</button>
+            <button data-page="mode-rotate">Rotate Blocks</button>
+            <button data-page="mode-transform">
+              Move, Copy &<br />
+              Delete Items
+            </button>
+            <h4>// Map Data</h4>
+            <button data-page="import-export">Import & Export</button>
+            <button data-page="purge">Purge Map</button>
+          </nav>
+          <div id="page-ui" class="help-page">
+            <h4>Overview</h4>
+            <div class="dialog-scrollable">
+              <h5>Grid</h5>
+              <p>
+                In the <em>center of the screen</em>, you'll find a 25x25 grid.
+                Here you can place, edit & delete blocks, traps and guards.
+              </p>
+              <h5>Keyboard Quick Reference</h5>
+              <p>
+                At the <em>left of the screen</em>, you'll find an overview of
+                shortcuts and hotkeys for the app.<br />The upper half are keys
+                to be held down to enter their respective mode and the lower
+                half are hotkeys to directly access some functions.
+              </p>
+              <h5>Palette</h5>
+              <p>
+                At the <em>right of the screen</em>, you'll find a palette with
+                all Blocks, non-surface Traps and Guards to pick from.
+              </p>
+              <p class="hotkeys">
+                Press <kbd>1</kbd> - <kbd>9</kbd> to select the first item of
+                each row. Press the same key again to select the other item in
+                that row.
+              </p>
+              <p class="info">
+                Hover your cursor over any item in the palette to see it's name
+                in a tool tip.
+              </p>
+              <h5 id="history">History Controls (Undo / Redo)</h5>
+              <p>
+                At the <em>top of the screen</em>, you'll find the history
+                controls to undo or redo your actions.
+              </p>
+              <p class="hotkeys">
+                Press <kbd>Z</kbd> to undo or <kbd>Y</kbd> to redo.
+              </p>
+              <p class="info">
+                You can undo and redo
+                <span class="text-yellow">up to 50 steps</span>.
+              </p>
+              <h5>Zoom Controls</h5>
+              <p>
+                At the <em>bottom of the screen</em>, you'll find the zoom
+                controls. Here you can zoom in, out and click the current zoom
+                level to reset it to 100%.
+              </p>
+              <p class="hotkeys">
+                Use <kbd class="half-cornered">CTRL</kbd> +
+                <span
+                  class="wheel-up mouse-scroll mouse"
+                  title="Mousewheel Up or Down"
+                  >&nbsp;</span
+                >
+                to zoom in/out.
+              </p>
+              <p class="hotkeys">
+                Press <kbd title="Zero">0</kbd> to reset the zoom to 100%.
+              </p>
+              <p class="info">
+                To scale up/down the UI, use your browser's native zoom
+                function.
+              </p>
+            </div>
+          </div>
+          <div id="page-mode-placing" class="help-page" hidden>
+            <h4>Placing Items</h4>
+            <div class="dialog-scrollable">
+              <h5>Placing Blocks, Traps and Guards</h5>
+              <p>
+                <em>This is the default mode.</em> Click on a free cell on the
+                grid to place the currently selected item from the palette.
+                Don't worry, <em>it does not replace items</em>!
+              </p>
+              <p class="hotkeys">
+                Use
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to place an item.
+              </p>
+              <p class="hotkeys">
+                Use
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                <span class="text-yellow">(Hold)</span> to draw across the grid.
+              </p>
+              <h5>
+                Placing the GenMat
+                <span class="genmat inline-object"></span>
+              </h5>
+              <p>
+                Places the one and only GenMat on the grid. If it's already
+                placed, it will be moved over to the new cell.
+              </p>
+              <p class="hotkeys">
+                Use
+                <kbd>G</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to place the GenMat.
+              </p>
+              <h5>
+                Placing Death Blossoms
+                <span class="trap blossom inline-object"></span> and Mines
+                <span class="trap blossom-mine inline-object"></span>
+              </h5>
+              <p>
+                The range of a Death Blossom is 2 cells in each direction and
+                reduced by other items blocking it.
+              </p>
+              <p class="info">
+                Mines can only be placed within the range of an existing Death
+                Blossom.
+              </p>
+              <p class="info">
+                When moving or deleting a Death Blossom, all Mines that are out
+                of range will be removed.
+              </p>
+            </div>
+          </div>
+          <div id="page-mode-edit" class="help-page" hidden>
+            <h4>Editing Traps</h4>
+            <div class="dialog-scrollable">
+              <p>
+                <em>Cycles between different setups</em> of traps attached to a
+                block's surface. If your specific setup doesn't seem possible,
+                try rotating the block, too!
+              </p>
+              <div class="edit-traps-list">
+                <h6>For Squares:</h6>
+                <ol>
+                  <li>
+                    <div class="block block-full" data-traps-on="1"></div>
+                  </li>
+                  <li>
+                    <div class="block block-full" data-traps-on="12"></div>
+                  </li>
+                  <li>
+                    <div class="block block-full" data-traps-on="13"></div>
+                  </li>
+                  <li>
+                    <div class="block block-full" data-traps-on="123"></div>
+                  </li>
+                  <li>
+                    <div class="block block-full" data-traps-on="1234"></div>
+                  </li>
+                </ol>
+                <h6>For Wedges:</h6>
+                <ol>
+                  <li>
+                    <div class="block block-half" data-traps-on="a"></div>
+                  </li>
+                  <li>
+                    <div class="block block-half" data-traps-on="b"></div>
+                  </li>
+                  <li>
+                    <div class="block block-half" data-traps-on="c"></div>
+                  </li>
+                  <li>
+                    <div class="block block-half" data-traps-on="ab"></div>
+                  </li>
+                  <li>
+                    <div class="block block-half" data-traps-on="ac"></div>
+                  </li>
+                  <li>
+                    <div class="block block-half" data-traps-on="bc"></div>
+                  </li>
+                  <li>
+                    <div class="block block-half" data-traps-on="abc"></div>
+                  </li>
+                </ol>
+              </div>
+              <p class="hotkeys">
+                Use <kbd>E</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                on blocks to edit them.
+              </p>
+              <p class="info">
+                For now, surface traps don't feature specific types or
+                modifications, with the exception of
+                <span data-link="mode-second-wave">Second Wave</span>.
+              </p>
+            </div>
+          </div>
+          <div id="page-mode-second-wave" class="help-page" hidden>
+            <h4>Toggling Second Wave</h4>
+            <div class="dialog-scrollable">
+              <p>
+                Toggles the Second Wave modification for a trap or block with at
+                least one trap on it's surface.
+              </p>
+              <p class="hotkeys">
+                Use <kbd>S</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to toggle the Second Wave modification.
+              </p>
+              <p class="info">
+                For now, only one Second Wave mod can be applied per block,
+                regardless of how many traps are attached to it's surface.
+              </p>
+            </div>
+          </div>
+          <div id="page-mode-rotate" class="help-page" hidden>
+            <h4>Rotating Blocks</h4>
+            <div class="dialog-scrollable">
+              <p>Rotates blocks (counter-)clockwise by 90°.</p>
+              <p class="hotkeys">
+                Use <kbd>R</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to rotate <span class="text-yellow" title="clockwise">⟳</span>.
+              </p>
+              <p class="hotkeys">
+                Use <kbd>R</kbd> <span class="text-yellow">(Hold)</span> +
+                <kbd class="half-cornered">SHIFT</kbd>
+                <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to rotate
+                <span class="text-yellow" title="counterclockwise">⟲</span>.
+              </p>
+            </div>
+          </div>
+          <div id="page-mode-transform" class="help-page" hidden>
+            <h4>Moving, Copying & Deleting Items</h4>
+            <div class="dialog-scrollable">
+              <h5>Move</h5>
+              <p>
+                Moves / transports an item by draging it to a new position on
+                the grid. If you drop it on an existing item, it will swap
+                places with the dragged item.
+              </p>
+              <p class="hotkeys">
+                Use <kbd>T</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                <span class="text-yellow">(Hold)</span> to drag & drop items.
+              </p>
+              <h5>Copy</h5>
+              <p>
+                This mode is a shorthand for selecting an item from the palette.
+              </p>
+              <p class="hotkeys">
+                Use <kbd>C</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to select the item.
+              </p>
+              <p class="info">
+                Surface traps and other modifications will not be "copied".
+              </p>
+              <h5>Delete</h5>
+              <p>Deletes any item from the grid.</p>
+              <p class="hotkeys">
+                Use <kbd>D</kbd> <span class="text-yellow">(Hold)</span> +
+                <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
+                to delete the item.
+              </p>
+            </div>
+          </div>
+          <div id="page-import-export" class="help-page" hidden>
+            <h4>Importing and Exporting Map Data</h4>
+            <div class="dialog-scrollable">
+              <h5>Import Map</h5>
+              <p>
+                Opens a dialog to import map data from a <em>.json</em> file.
+              </p>
+              <p class="hotkeys">
+                Press <kbd>I</kbd> to open the Import Map dialog.
+              </p>
+              <p class="info">
+                This will overwrite the existing map! However, you can
+                <span data-link="ui#history">undo this step</span>.
+              </p>
+              <h5>Export Map</h5>
+              <p>
+                Opens a dialog to export your map data to a
+                <em>.json</em> file.
+              </p>
+              <p class="hotkeys">
+                Press <kbd>O</kbd> to open the Export Map dialog.
+              </p>
+              <p class="info">
+                If no map name is given, I will name it for you!
+              </p>
+            </div>
+          </div>
+          <div id="page-purge" class="help-page" hidden>
+            <h4>Removing All Items</h4>
+            <div class="dialog-scrollable">
+              <p>
+                Opens the confirmation dialog for removing all items from the
+                grid.
+              </p>
+              <p class="info">
+                You can <span data-link="ui#history">undo this step</span>.
+              </p>
+            </div>
+          </div>
+        </div>
+        <form method="dialog">
+          <div class="buttons">
+            <button value="cancel" formnovalidate autofocus>
+              <kbd class="half-cornered">ESC</kbd>Close
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <main>
+        <div id="grid"></div>
+      </main>
+    </div>
+  </body>
+</html>

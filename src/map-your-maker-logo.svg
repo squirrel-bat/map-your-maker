@@ -1,0 +1,162 @@
+<svg
+  width="256"
+  height="256"
+  viewBox="-2.4 -2.4 28.8 28.8"
+  fill="none"
+  version="1.1"
+  id="svg1"
+  sodipodi:docname="map-your-maker-logo.svg"
+  inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:cc="http://creativecommons.org/ns#"
+>
+  <defs id="defs1">
+    <linearGradient id="linearGradient14" inkscape:collect="always">
+      <stop
+        style="stop-color: #061618; stop-opacity: 1"
+        offset="0"
+        id="stop14"
+      />
+      <stop
+        style="stop-color: #025044; stop-opacity: 1"
+        offset="1"
+        id="stop15"
+      />
+    </linearGradient>
+    <linearGradient id="linearGradient10" inkscape:collect="always">
+      <stop
+        style="stop-color: #c2320a; stop-opacity: 1"
+        offset="0"
+        id="stop10"
+      />
+      <stop
+        style="stop-color: #f3680c; stop-opacity: 1"
+        offset="1"
+        id="stop11"
+      />
+    </linearGradient>
+    <linearGradient
+      inkscape:collect="always"
+      xlink:href="#linearGradient10"
+      id="linearGradient11"
+      x1="12.000002"
+      y1="24.164061"
+      x2="12.000002"
+      y2="-0.1640659"
+      gradientUnits="userSpaceOnUse"
+    />
+    <linearGradient
+      inkscape:collect="always"
+      xlink:href="#linearGradient14"
+      id="linearGradient15"
+      x1="8.1328096"
+      y1="19.530914"
+      x2="8.1328096"
+      y2="2.9371591"
+      gradientUnits="userSpaceOnUse"
+    />
+  </defs>
+  <sodipodi:namedview
+    id="namedview1"
+    pagecolor="#ffffff"
+    bordercolor="#000000"
+    borderopacity="0.25"
+    inkscape:showpageshadow="2"
+    inkscape:pageopacity="0.0"
+    inkscape:pagecheckerboard="0"
+    inkscape:deskcolor="#d1d1d1"
+    inkscape:zoom="1"
+    inkscape:cx="186"
+    inkscape:cy="125"
+    inkscape:window-width="1707"
+    inkscape:window-height="1371"
+    inkscape:window-x="853"
+    inkscape:window-y="32"
+    inkscape:window-maximized="0"
+    inkscape:current-layer="g19"
+    showguides="true"
+  />
+  <g id="g19" inkscape:label="logo">
+    <path
+      id="path9"
+      style="
+        display: inline;
+        fill: url(#linearGradient11);
+        fill-opacity: 1;
+        stroke: #992900;
+        stroke-width: 1.125;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: none;
+        stroke-opacity: 1;
+      "
+      d="M 8.133212,11.23407 8.1328111,5.5546853 M 0.39843367,1.6874965 8.1328111,5.5546853 15.867188,1.6874965 23.601566,5.5546853 V 22.312503 L 15.867188,18.445314 8.1328111,22.312503 0.39843367,18.445314 Z"
+      sodipodi:nodetypes="ccccccccccc"
+      inkscape:label="map"
+    />
+    <path
+      id="path17"
+      style="
+        display: inline;
+        fill: url(#linearGradient15);
+        fill-opacity: 1;
+        stroke: none;
+        stroke-width: 1.125;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: none;
+        stroke-opacity: 1;
+      "
+      d="m 5.0689539,10.344378 -1e-7,9.807408 -4.31052013,-2.15526 V 2.4963539 L 8.1328111,6.1835427 15.867188,2.3163539 V 17.816526 l -4.670521,2.33526 v -9.807408 l -3.063856,1.531929 z"
+      sodipodi:nodetypes="ccccccccccc"
+      inkscape:label="M"
+    />
+    <path
+      style="
+        display: inline;
+        opacity: 0.305;
+        fill: #000000;
+        fill-opacity: 1;
+        stroke: #000000;
+        stroke-width: 1.125;
+        stroke-linecap: butt;
+        stroke-linejoin: miter;
+        stroke-dasharray: none;
+        stroke-opacity: 1;
+        paint-order: normal;
+      "
+      d="M 0.96128617,1.9689228 7.5699099,5.2732347 7.56991,22.031052 0.96128617,18.72674 Z"
+      id="path16"
+      sodipodi:nodetypes="ccccc"
+      transform="matrix(-1,0,0,1,16.265622,0)"
+      inkscape:label="shadow"
+    />
+  </g>
+  <metadata id="metadata19">
+    <rdf:RDF>
+      <cc:License rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+          rdf:resource="http://creativecommons.org/ns#CommercialUse"
+        />
+        <cc:permits
+          rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+        <cc:requires rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+      <cc:Work rdf:about="">
+        <cc:license
+          rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+        />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

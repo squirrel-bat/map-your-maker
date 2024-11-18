@@ -1,0 +1,12 @@
+{
+  "name": "mym_editor",
+  "version": "0.0.0",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2
+  }
+}
