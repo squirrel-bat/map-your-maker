@@ -159,14 +159,12 @@ body {
   left: 50%;
   translate: -50% 0;
   font-size: 2cqw;
-  color: var(--teeth);
-  font-family: system-ui;
-  font-weight: bold;
-  letter-spacing: 0.1ch;
+  color: var(--mym-yellow);
+  letter-spacing: 0.2ch;
   text-transform: uppercase;
-  border-radius: 3px;
+  text-shadow: 0 0.25rem 0.1rem black;
   opacity: 0;
-  animation: pulse 3.3s infinite calc(var(--welcome-step-1) * 4);
+  animation: pulse 3.3s infinite calc(var(--welcome-step-1) * 6);
 }
 @keyframes pulse {
   0%,
@@ -176,41 +174,6 @@ body {
   30%,
   70% {
     opacity: 1;
-  }
-}
-#start-btn::before,
-#start-btn::after {
-  content: 'Press any key';
-  color: var(--cyan);
-  position: absolute;
-  left: 0;
-  clip-path: inset(34% 0 0 0);
-  animation: glitch 1s linear infinite;
-  z-index: -1;
-}
-#start-btn::before {
-  clip-path: inset(12% 0 66% 0);
-  animation-direction: reverse;
-  animation-delay: 800ms;
-  color: hsl(313, 100%, 50%);
-}
-@keyframes glitch {
-  0%,
-  61%,
-  65%,
-  72%,
-  83%,
-  100% {
-    translate: 0 0;
-  }
-  63%,
-  68% {
-    translate: -2% 0;
-  }
-  80%,
-  87%,
-  97% {
-    translate: 1% 0;
   }
 }
 
