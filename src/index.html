@@ -26,18 +26,30 @@
     <div id="main" hidden>
       <div id="top-bar" class="bar">
         <div class="bar-grp history-btns">
-          <button id="history-undo" title="Undo [Z]">↩</button>
-          <button id="help-btn" title="Help [H]">?</button>
-          <button id="history-redo" title="Redo [Y]">↪</button>
+          <button type="button" id="history-undo" title="Undo [Z]">↩</button>
+          <button type="button" id="help-btn" title="Help [H]">?</button>
+          <button type="button" id="history-redo" title="Redo [Y]">↪</button>
         </div>
       </div>
       <div id="bottom-bar" class="bar">
         <div class="bar-grp">
-          <button id="zoom-out" title="Zoom Out [Ctrl + Mousewheel Down]">
+          <button
+            type="button"
+            id="zoom-out"
+            title="Zoom Out [Ctrl + Mousewheel Down]"
+          >
             -
           </button>
-          <button id="zoom-val" title="Reset Zoom [0]">100%</button>
-          <button id="zoom-in" title="Zoom In [Ctrl + Mousewheel Up]">+</button>
+          <button type="button" id="zoom-val" title="Reset Zoom [0]">
+            100%
+          </button>
+          <button
+            type="button"
+            id="zoom-in"
+            title="Zoom In [Ctrl + Mousewheel Up]"
+          >
+            +
+          </button>
         </div>
       </div>
       <div id="keymap">
@@ -134,8 +146,10 @@
         <form method="dialog">
           <input type="file" id="import-file" required />
           <div class="buttons">
-            <button class="confirm" value="confirm"><kbd>F</kbd>Import</button>
-            <button value="cancel" formnovalidate autofocus>
+            <button type="submit" class="confirm" value="confirm">
+              <kbd>F</kbd>Import
+            </button>
+            <button type="submit" value="cancel" formnovalidate autofocus>
               <kbd class="half-cornered">ESC</kbd>Cancel
             </button>
           </div>
@@ -155,8 +169,10 @@
             onkeydown="((e) => {e.stopPropagation()})(event)"
           />
           <div class="buttons">
-            <button class="confirm" value="confirm"><kbd>F</kbd>Export</button>
-            <button value="cancel" formnovalidate autofocus>
+            <button type="submit" class="confirm" value="confirm">
+              <kbd>F</kbd>Export
+            </button>
+            <button type="submit" value="cancel" formnovalidate autofocus>
               <kbd class="half-cornered">ESC</kbd>Cancel
             </button>
           </div>
@@ -171,8 +187,10 @@
           </p>
           <p>Are you sure you want to do this?</p>
           <div class="buttons">
-            <button class="confirm" value="confirm"><kbd>F</kbd>Yes</button>
-            <button value="cancel" formnovalidate autofocus>
+            <button type="submit" class="confirm" value="confirm">
+              <kbd>F</kbd>Yes
+            </button>
+            <button type="submit" value="cancel" formnovalidate autofocus>
               <kbd class="half-cornered">ESC</kbd>Cancel
             </button>
           </div>
@@ -183,19 +201,25 @@
         <div id="help-body">
           <nav>
             <h4>// Interface</h4>
-            <button data-page="ui" class="active">Overview</button>
+            <button type="button" data-page="ui" class="active">
+              Overview
+            </button>
             <h4>// Modes</h4>
-            <button data-page="mode-placing">Place Items</button>
-            <button data-page="mode-edit">Edit Traps</button>
-            <button data-page="mode-second-wave">Second Wave</button>
-            <button data-page="mode-rotate">Rotate Blocks</button>
-            <button data-page="mode-transform">
-              Move, Copy &<br />
+            <button type="button" data-page="mode-placing">Place Items</button>
+            <button type="button" data-page="mode-edit">Edit Traps</button>
+            <button type="button" data-page="mode-second-wave">
+              Second Wave
+            </button>
+            <button type="button" data-page="mode-rotate">Rotate Blocks</button>
+            <button type="button" data-page="mode-transform">
+              Move, Copy &amp;<br />
               Delete Items
             </button>
             <h4>// Map Data</h4>
-            <button data-page="import-export">Import & Export</button>
-            <button data-page="purge">Purge Map</button>
+            <button type="button" data-page="import-export">
+              Import &amp; Export
+            </button>
+            <button type="button" data-page="purge">Purge Map</button>
           </nav>
           <div id="page-ui" class="help-page">
             <h4>Overview</h4>
@@ -203,7 +227,7 @@
               <h5>Grid</h5>
               <p>
                 In the <em>center of the screen</em>, you'll find a 25x25 grid.
-                Here you can place, edit & delete blocks, traps and guards.
+                Here you can place, edit &amp; delete blocks, traps and guards.
               </p>
               <h5>Keyboard Quick Reference</h5>
               <p>
@@ -416,7 +440,7 @@
             </div>
           </div>
           <div id="page-mode-transform" class="help-page" hidden>
-            <h4>Moving, Copying & Deleting Items</h4>
+            <h4>Moving, Copying &amp; Deleting Items</h4>
             <div class="dialog-scrollable">
               <h5>Move</h5>
               <p>
@@ -427,7 +451,8 @@
               <p class="hotkeys">
                 Use <kbd>T</kbd> <span class="text-yellow">(Hold)</span> +
                 <span class="lmb mouse" title="Left Mouse Button">&nbsp;</span>
-                <span class="text-yellow">(Hold)</span> to drag & drop items.
+                <span class="text-yellow">(Hold)</span> to drag &amp; drop
+                items.
               </p>
               <h5>Copy</h5>
               <p>
@@ -492,7 +517,7 @@
         </div>
         <form method="dialog">
           <div class="buttons">
-            <button value="cancel" formnovalidate autofocus>
+            <button type="submit" value="cancel" formnovalidate autofocus>
               <kbd class="half-cornered">ESC</kbd>Close
             </button>
           </div>
