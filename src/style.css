@@ -134,7 +134,7 @@ body {
     var(--plasma-orange) -40%,
     var(--delete-red)
   );
-  filter: drop-shadow(0 3px 0.1rem black);
+  filter: drop-shadow(0 0.5rem 0.25rem var(--black-60));
   background-clip: text;
 }
 #welcome p {
@@ -146,7 +146,7 @@ body {
   color: transparent;
   background: var(--modal-bg-gradient);
   background-clip: text;
-  filter: brightness(2) drop-shadow(0 3px 0.1rem black);
+  filter: brightness(2) drop-shadow(0 0.3rem 0.1rem black);
   transition: opacity 500ms ease-in calc(var(--welcome-step-1) * 2.3);
   opacity: 1;
   scale: 1;
