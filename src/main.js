@@ -631,7 +631,43 @@ function updateHistoryButtons(step) {
   document.getElementById('history-redo').disabled = step >= history.length
 }
 
-function exportMapData(filename = 'i_should_pick_a_better_name_for_my_map') {
+const FILENAMES = [
+  'I_should_pick_a_better_name_for_this_map',
+  'no0ne_named_this_map',
+  'Naming_maps_is_hard',
+  'my_map_v3_final_FINAL(3)',
+  'I_told_you_I_would_name_this_map_for_you',
+  'Are_you_sure_it_saved_the_whole_map',
+  'INTERNAL_MAP_ERROR_just_kidding',
+  'This_better_not_be_another_maze_map',
+  'MYM_map_and_private_browser_history',
+  'MYM_map_and_private_ssh_key',
+  'xXx_3L1T3H_SH4D0W_R34V3R_M4P_xXx',
+  'Did_you_know_squirrelbat_has_a_Ko-fi',
+  'Never_trust_a_map_you_download_from_the_internet',
+  'You_wouldnt_download_a_map',
+  'Meet_Your_Mapper',
+  'MyHouse.wad',
+  'Please_fix_napalm',
+  'Please_note_that_Map_Your_Maker_is_not_free_software._After_a_40_day_trial_period_you_must_either_buy_a_license_or_remove_it_from_your_browsing_history',
+  'Are_you_still_mapping',
+  'Rock_Rapids_by_Copperbadge',
+  'Haven_by_Copperbadge',
+  'Skamokawa_Valley_by_Copperbadge',
+  'Robstown_by_Copperbadge',
+  'Wolbach_by_Copperbadge',
+  'Vanceburg_by_Copperbadge',
+  'Copper_Hill_by_Copperbadge',
+  'Sandwich_by_Copperbadge',
+  'We_have_been_trying_to_reach_you_about_your_maps_extended_warranty',
+  'Eminem_is_my_favourite_mapper',
+  'Pantheon_of_Builders_material',
+  'homework',
+  'Paul_Allens_map',
+]
+
+function exportMapData(filename) {
+  filename = filename || FILENAMES[Math.floor(Math.random() * FILENAMES.length)]
   const data = new Blob(
     [
       JSON.stringify(
