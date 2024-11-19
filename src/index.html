@@ -16,18 +16,52 @@
     <script src="./main.js"></script>
   </head>
   <body>
-    <div id="welcome">
-      <img src="./map-your-maker-logo.svg" alt="logo" />
-      <h1>Map Your Maker</h1>
-      <p>A sketching tool for Meet Your Maker.</p>
-      <div id="start-btn">Press Any Key</div>
+    <div id="intro">
+      <div>
+        <img src="./map-your-maker-logo.svg" alt="logo" />
+        <h1>Map Your Maker</h1>
+        <p>A sketching tool for Meet Your Maker.</p>
+        <div id="start-btn">Press Any Key</div>
+      </div>
     </div>
+
+    <dialog id="welcome" hidden>
+      <h3>Welcome, Builder!</h3>
+      <div class="welcome-main">
+        <img src="./map-your-maker-logo.svg" alt="logo" />
+        <form method="dialog">
+          <em>Hey there!</em>
+          <p>
+            I'm
+            <a href="https://ko-fi.com/squirrelbat" target="_blank"
+              >Copperbadge</a
+            >
+            and I'd like to thank you for using Map Your Maker. 🧡
+          </p>
+          <p>
+            The Chimera is already complaining about a lack of death traps, so
+            let's go!
+          </p>
+          <p>
+            You can <em>get started by checking out the Guide</em> or by closing
+            this Popup to get right to it.
+          </p>
+          <p class="hotkeys">Press <kbd>H</kbd>to open the Guide.</p>
+          <p class="info">This Popup won't show again.</p>
+          <div class="buttons">
+            <button type="submit" value="cancel" autofocus>
+              <kbd class="half-cornered">ESC</kbd>Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </dialog>
 
     <div id="main" hidden>
       <div id="top-bar" class="bar">
         <div class="bar-grp history-btns">
           <button type="button" id="history-undo" title="Undo [Z]">↩</button>
-          <button type="button" id="help-btn" title="Help [H]">?</button>
+          <button type="button" id="help-btn" title="Guide [H]">?</button>
           <button type="button" id="history-redo" title="Redo [Y]">↪</button>
         </div>
       </div>
@@ -88,7 +122,7 @@
           <kbd>Y</kbd>
           <span>Redo</span>
           <kbd>H</kbd>
-          <span>Help</span>
+          <span>Guide</span>
         </div>
       </div>
       <div id="toolbar">
@@ -197,7 +231,7 @@
         </form>
       </dialog>
       <dialog id="help">
-        <h3>Help</h3>
+        <h3>Guide</h3>
         <div id="help-body">
           <nav>
             <h4>// Interface</h4>
@@ -527,5 +561,17 @@
         <div id="grid"></div>
       </main>
     </div>
+
+    <footer>
+      <span id="copyright"
+        >© 2024
+        <a
+          href="https://ko-fi.com/squirrelbat"
+          target="_blank"
+          title="Link to my Ko-fi"
+          >Copperbadge / squirrel-bat</a
+        ></span
+      >
+    </footer>
   </body>
 </html>

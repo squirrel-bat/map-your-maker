@@ -84,12 +84,33 @@ body {
   color: white;
 }
 
-#welcome {
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0.25rem 0.5rem;
+  color: var(--teeth);
+  text-underline-offset: 0.1rem;
+  text-shadow: 0.1rem 0.1rem 0 black;
+  filter: brightness(0.8);
+}
+footer:hover {
+  filter: brightness(1);
+}
+footer a::after {
+  display: none;
+}
+
+#intro {
+  padding: 8rem 0;
+  overflow: hidden;
+}
+#intro > div {
   opacity: 1;
   scale: 1;
-  --welcome-step-1: 600ms;
+  --intro-step-1: 600ms;
   transition: all cubic-bezier(0.5, 2, 0.15, 0.8)
-    calc(var(--welcome-step-1) * 0.7);
+    calc(var(--intro-step-1) * 0.7);
   white-space: nowrap;
   display: grid;
   grid-template-columns: auto auto;
@@ -102,26 +123,26 @@ body {
   user-select: none;
   pointer-events: none;
 }
-#welcome img {
+#intro img {
   translate: 0 0;
   scale: 1;
   transform-origin: center;
   transition:
-    translate 750ms var(--welcome-step-1),
-    scale 750ms var(--welcome-step-1);
+    translate 750ms var(--intro-step-1),
+    scale 750ms var(--intro-step-1);
   filter: drop-shadow(0 0.5rem 0.25rem var(--black-60));
   width: 20cqw;
   z-index: 1;
 }
-#welcome h1 {
+#intro h1 {
   transform-origin: center;
   translate: 0 0;
   scale: 1 1;
   opacity: 1;
   transition:
-    scale 750ms var(--welcome-step-1),
-    translate 750ms var(--welcome-step-1),
-    opacity 750ms var(--welcome-step-1);
+    scale 750ms var(--intro-step-1),
+    translate 750ms var(--intro-step-1),
+    opacity 750ms var(--intro-step-1);
   line-height: 1;
   font-size: 6cqw;
   font-weight: normal;
@@ -137,7 +158,7 @@ body {
   filter: drop-shadow(0 0.5rem 0.25rem var(--black-60));
   background-clip: text;
 }
-#welcome p {
+#intro p {
   grid-column: 2 / 3;
   font-size: 2.8cqw;
   font-family: system-ui;
@@ -147,7 +168,7 @@ body {
   background: var(--modal-bg-gradient);
   background-clip: text;
   filter: brightness(2) drop-shadow(0 0.3rem 0.1rem black);
-  transition: opacity 500ms ease-in calc(var(--welcome-step-1) * 2.3);
+  transition: opacity 500ms ease-in calc(var(--intro-step-1) * 2.3);
   opacity: 1;
   scale: 1;
   text-align: right;
@@ -164,7 +185,7 @@ body {
   text-transform: uppercase;
   text-shadow: 0 0.25rem 0.1rem black;
   opacity: 0;
-  animation: pulse 3.3s infinite calc(var(--welcome-step-1) * 6);
+  animation: pulse 3.3s infinite calc(var(--intro-step-1) * 6);
 }
 @keyframes pulse {
   0%,
@@ -178,23 +199,38 @@ body {
 }
 
 @starting-style {
-  #welcome,
-  #welcome p,
+  #intro > div,
+  #intro p,
   #start-btn {
     opacity: 0;
     scale: 0;
   }
-  #welcome img {
+  #intro img {
     scale: 1.5;
     translate: 140% 0;
   }
-  #welcome h1 {
+  #intro h1 {
     translate: -50% 0;
     scale: 0 1;
     opacity: 0;
   }
 }
-
+#welcome {
+  color: var(--mym-yellow-text-muted);
+  line-height: 1.5;
+}
+.welcome-main {
+  display: flex;
+  align-items: start;
+  gap: 2rem;
+  padding: 1.5rem;
+}
+#welcome form {
+  padding: 0;
+}
+#welcome img {
+  filter: drop-shadow(0 0.25rem 0.25rem var(--black-60));
+}
 #keymap {
   position: fixed;
   top: 50%;
@@ -598,13 +634,17 @@ kbd {
   vertical-align: middle;
   translate: 0 -15%;
 }
+a,
 [data-link] {
   color: var(--mym-yellow);
   cursor: pointer;
+  text-decoration: none;
 }
+a:hover,
 [data-link]:hover {
   text-decoration: underline;
 }
+a::after,
 [data-link]::after {
   content: '⇱';
   font-weight: normal;
@@ -615,6 +655,9 @@ kbd {
   display: inline-block;
   rotate: -90deg;
   translate: 0 0.1em;
+}
+a[target='_blank']::after {
+  rotate: 90deg;
 }
 
 em,

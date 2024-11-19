@@ -452,12 +452,18 @@ window.addEventListener('load', () => {
       e.repeat ||
       e.ctrlKey ||
       e.altKey ||
-      e.shiftKey
+      e.shiftKey ||
+      e.key.toLowerCase() == 'escape'
     )
       return
-    if (!document.getElementById('welcome').hidden) {
-      document.getElementById('welcome').hidden = true
+    if (!document.getElementById('intro').hidden) {
+      document.getElementById('intro').hidden = true
       document.getElementById('main').hidden = false
+      if (!localStorage.getItem('hasSeenWelcome')) {
+        localStorage.setItem('hasSeenWelcome', true)
+        document.getElementById('welcome').hidden = false
+        document.getElementById('welcome').showModal()
+      }
       return
     }
     if (Object.values(KEYS).includes(e.key)) {
@@ -644,11 +650,12 @@ const FILENAMES = [
   'MYM_map_and_private_ssh_key',
   'xXx_3L1T3H_SH4D0W_R34V3R_M4P_xXx',
   'Did_you_know_squirrelbat_has_a_Ko-fi',
-  'Never_trust_a_map_you_download_from_the_internet',
+  'Never_trust_a_map_you_downloaded_from_the_internet',
   'You_wouldnt_download_a_map',
   'Meet_Your_Mapper',
   'MyHouse.wad',
   'Please_fix_napalm',
+  'You_have_created_a_death_trap_and_raiders_march_to_the_slaughter',
   'Please_note_that_Map_Your_Maker_is_not_free_software._After_a_40_day_trial_period_you_must_either_buy_a_license_or_remove_it_from_your_browsing_history',
   'Are_you_still_mapping',
   'Rock_Rapids_by_Copperbadge',
