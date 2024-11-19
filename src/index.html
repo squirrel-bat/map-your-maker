@@ -148,7 +148,9 @@
             type="text"
             id="filename"
             placeholder="Map name (case sensitive)"
-            pattern="^$|[^\\/:\x22*?<>\|]+"
+            pattern="^$|[^\\\/:\x22*?<>\|]+"
+            title="Name must 𝐍𝐎𝐓 include these symbols: !?*:\|/<>"
+            autocomplete="off"
             maxlength="250"
             onkeydown="((e) => {e.stopPropagation()})(event)"
           />
