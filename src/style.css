@@ -179,7 +179,7 @@ footer a::after {
   bottom: -4cqw;
   left: 50%;
   translate: -50% 0;
-  font-size: 2cqw;
+  font-size: 1.5cqw;
   color: var(--mym-yellow);
   letter-spacing: 0.2ch;
   text-transform: uppercase;
