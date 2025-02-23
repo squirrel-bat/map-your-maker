@@ -38,6 +38,7 @@
   --mym-yellow-text: hsl(66, 40%, 60%);
   --mym-yellow-text-muted: hsl(66, 40%, 35%);
   --mym-orange: hsl(19, 82%, 43%);
+  --ui-orange: hsl(27, 83%, 53%);
   --mym-btn-bg: hsl(143, 25%, 9%);
   --brown: hsl(36, 100%, 23%);
   --plasma-grey: hsl(205, 8%, 30%);
@@ -331,15 +332,16 @@ kbd.half-cornered {
   color: var(--brown);
 }
 dialog {
+  --dialog-color: var(--mym-yellow);
   overflow: visible;
   padding: 0;
   border: none;
   font-family: monospace;
   font-weight: bold;
   text-align: left;
-  color: var(--mym-yellow);
+  color: var(--dialog-color);
   background: var(--modal-bg-gradient);
-  border-left: 2px solid var(--mym-yellow);
+  border-left: 2px solid var(--dialog-color);
   outline: none;
   box-shadow: 0 0 1rem black;
   transform-origin: top left;
@@ -360,7 +362,7 @@ dialog::before {
   right: calc(100% - 12px);
   height: 1px;
   width: 12px;
-  border-top: 4px solid var(--mym-yellow);
+  border-top: 4px solid var(--dialog-color);
   transform-origin: center right;
   animation: move 400ms ease-out forwards 300ms;
 }
@@ -370,7 +372,7 @@ dialog::before {
   }
 }
 dialog * {
-  scrollbar-color: var(--mym-yellow) transparent;
+  scrollbar-color: var(--dialog-color) transparent;
   scrollbar-width: thin;
 }
 dialog h3 {
@@ -380,7 +382,20 @@ dialog h3 {
   padding: 0.6rem 1.4rem;
   font-size: 1.4rem;
   color: black;
-  background: var(--mym-yellow);
+  background: var(--dialog-color);
+}
+dialog button {
+  color: var(--dialog-color);
+}
+dialog button:hover {
+  background: linear-gradient(to right, var(--dialog-color) -100%, transparent);
+  border-left-color: var(--dialog-color);
+}
+dialog kbd {
+  background-color: var(--dialog-color);
+}
+#import-error {
+  --dialog-color: var(--ui-orange);
 }
 dialog form {
   padding: 1.5rem;

@@ -539,6 +539,9 @@ window.addEventListener('load', () => {
       if (files.length > 0) importMapData(files)
     }
   })
+  document.getElementById('import-error').addEventListener('submit', (e) => {
+    if (e.submitter.value == 'confirm') openJustOneModal('import')
+  })
   document.getElementById('export').addEventListener('submit', (e) => {
     if (e.submitter.value == 'confirm')
       exportMapData(document.getElementById('filename')?.value || undefined)
@@ -702,9 +705,13 @@ function exportMapData(filename) {
 async function importMapData(files) {
   const blob = new Blob([files.item(0)], { type: 'application/json' })
   if (blob.type == 'application/json') {
-    const map = JSON.parse(await blob.text())
-    resetGrid()
-    renderTiles(map.data)
-    save()
+    try {
+      const map = JSON.parse(await blob.text())
+      resetGrid()
+      renderTiles(map.data)
+      save()
+    } catch (error) {
+      openJustOneModal('import-error')
+    }
   }
 }

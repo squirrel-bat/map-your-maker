@@ -178,10 +178,30 @@
       <dialog id="import">
         <h3>Import Map</h3>
         <form method="dialog">
-          <input type="file" id="import-file" required />
+          <input
+            type="file"
+            id="import-file"
+            accept="application/json"
+            required
+          />
           <div class="buttons">
             <button type="submit" class="confirm" value="confirm">
               <kbd>F</kbd>Import
+            </button>
+            <button type="submit" value="cancel" formnovalidate autofocus>
+              <kbd class="half-cornered">ESC</kbd>Cancel
+            </button>
+          </div>
+        </form>
+      </dialog>
+      <dialog id="import-error">
+        <h3>IMPORT ERROR</h3>
+        <form method="dialog">
+          <p>Whoops, something went wrong!</p>
+          <p>Please check if your map is a valid JSON file.</p>
+          <div class="buttons">
+            <button type="submit" class="confirm" value="confirm">
+              <kbd>F</kbd>Back
             </button>
             <button type="submit" value="cancel" formnovalidate autofocus>
               <kbd class="half-cornered">ESC</kbd>Cancel
